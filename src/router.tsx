@@ -5,18 +5,20 @@ import List from './features/admin/views/list';
 import Details from './features/customer/views/details';
 import Home from './features/customer/views/home';
 import UserRoot from './features/customer/views/userRoot';
+import ErrorPage from './features/error/errorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <UserRoot />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        index: true,
         element: <Home />,
       },
       {
-        path: '/home/:name',
+        path: 'home/:name',
         element: <Details />,
       },
     ],
@@ -26,11 +28,11 @@ const router = createBrowserRouter([
     element: <AdminRoot />,
     children: [
       {
-        path: '/admin',
+        index: true,
         element: <List />,
       },
       {
-        path: '/admin/home/:name',
+        path: 'home/:name',
         element: <Edit />,
       },
     ],
