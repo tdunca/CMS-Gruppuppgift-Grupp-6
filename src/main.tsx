@@ -1,23 +1,19 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
+import App from './App.tsx';
 import firebaseOptions from './firebaseOptions.ts';
 import './index.css';
-import router from './router.tsx';
 
-// Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseOptions);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const storage = getStorage();
 
-// Render the root React component (App) to the DOM
+// Initialize Cloud Firestore and get a reference to the service
+export const db = getFirestore(app);
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );
