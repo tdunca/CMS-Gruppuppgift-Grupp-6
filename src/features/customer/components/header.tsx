@@ -1,5 +1,7 @@
+import Style from './header.module.css';
+
 function Header() {
-  return <>HEADER FÖR FAN!</>;
+  return <header className={Style.header}>Header för fan!</header>;
 }
 
 export default Header;

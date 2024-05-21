@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 function Details() {
   const { name } = useParams();
 
-  return <>DETAILS FÖR FAN! {name}</>;
+  return <main>DETAILS FÖR FAN! {name}</main>;
 }
 
 export default Details;

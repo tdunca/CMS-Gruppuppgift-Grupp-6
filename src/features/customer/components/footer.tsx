@@ -1,5 +1,6 @@
+import Style from './footer.module.css';
 function Footer() {
-  return <>FOOTER FÖR FAN!</>;
+  return <footer className={Style.footer}>Footer för fan!</footer>;
 }
 
 export default Footer;

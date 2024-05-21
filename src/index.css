@@ -21,7 +21,9 @@ a {
 a:hover {
   color: #f253c5;
 }
-
+main {
+  flex: 1;
+}
 body {
   margin: 0;
   display: flex;

@@ -21,7 +21,7 @@ function Edit() {
   };
 
   return (
-    <section>
+    <main>
       <label>Description:</label>
       <input
         type="text"
@@ -30,7 +30,7 @@ function Edit() {
       />
       <button onClick={handleClick}>Lägg till hus för fan!</button>
       <input type="file" onChange={handleFileChange} />;
-    </section>
+    </main>
   );
 }
 
