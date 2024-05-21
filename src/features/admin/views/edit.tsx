@@ -1,25 +1,36 @@
-import 'firebase/firestore';
-import { addDoc, collection } from 'firebase/firestore';
+import { useState, type ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { db } from '../../../main';
+import { saveHome } from '../../firebase/home';
+import { uploadFile } from '../../firebase/upload';
 
 function Edit() {
+  const [description, setDescription] = useState('');
+
   const { name } = useParams();
 
-  async function handleClick() {
-    try {
-      await addDoc(collection(db, 'hus'), {
-        name: name,
-      });
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
-  }
+  const handleClick = () => {
+    if (!name || !description) return; // TODO: better validation
+
+    saveHome({ name, description });
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+
+    uploadFile(e.target.files[0]);
+  };
 
   return (
-    <>
+    <main>
+      <label>Description:</label>
+      <input
+        type="text"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <button onClick={handleClick}>Lägg till hus för fan!</button>
-    </>
+      <input type="file" onChange={handleFileChange} />;
+    </main>
   );
 }
 

@@ -13,10 +13,10 @@ function List() {
   }
 
   return (
-    <>
+    <main>
       <button onClick={handleClick}>Hämta hus för fan!</button>
       {houses && houses.map((house, index) => <div key={index}>{house}</div>)}
-    </>
+    </main>
   );
 }
 

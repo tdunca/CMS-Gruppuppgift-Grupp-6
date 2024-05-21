@@ -1,3 +1,4 @@
+
 import { db } from '../../../main';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import { useState } from 'react';
@@ -27,6 +28,7 @@ function Footer() {
       FOOTER FÖR FAN!
     </>
   );
+
 }
 
 export default Footer;
