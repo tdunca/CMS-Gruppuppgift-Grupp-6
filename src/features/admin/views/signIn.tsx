@@ -17,7 +17,7 @@ function SignIn() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential: UserCredential) => {
         console.log('User registered and logged in', { userCredential });
-				navigate('home')
+        navigate('home');
       })
       .catch((error) => {
         console.log(error);
@@ -37,7 +37,7 @@ function SignIn() {
   };
 
   return (
-    <section>
+    <main>
       <label>Epost:</label>
       <input
         type="text"
@@ -56,7 +56,7 @@ function SignIn() {
 
       <button onClick={signInUser}>Sign In</button>
       <button onClick={createUser}>Sign Up</button>
-    </section>
+    </main>
   );
 }
 

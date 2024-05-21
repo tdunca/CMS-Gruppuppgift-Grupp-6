@@ -1,5 +1,5 @@
 function Home() {
-  return <>HOME FÖR FAN!</>;
+  return <main>home för fan!</main>;
 }
 
 export default Home;
