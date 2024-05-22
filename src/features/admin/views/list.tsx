@@ -16,7 +16,7 @@ function List() {
     onLoad();
   }, []);
 
-  const deleteHouse = async (id) => {
+  const deleteHouse = async (id: string) => {
     try {
       const houseDoc = doc(db, 'hus', id);
       await deleteDoc(houseDoc);
@@ -27,19 +27,22 @@ function List() {
     }
   };
 
-  const handleNavigate = (id) => {
+  const handleNavigate = (id: string) => {
     navigate(`/admin/home/edit/${id}`);
   };
 
   return (
     <main>
       <button onClick={() => handleNavigate('new')}>Add New House</button>
-      {houses.map((house, index) => (
-        <div key={house.id}>
-          <div>{house.name}</div>
-          <button onClick={() => handleNavigate(house.id)}>Edit</button>
-          <button onClick={() => deleteHouse(house.id)}>Delete</button>
-        </div>
+      {houses.map((house) => (
+        <article key={house.id}>
+          {/* TODO: Insert picture*/}
+          <p>{`${house.homeAddress} ${house.homeCity}`}</p>
+          <div>
+            <button onClick={() => handleNavigate(house.id)}>Edit</button>
+            <button onClick={() => deleteHouse(house.id)}>Delete</button>
+          </div>
+        </article>
       ))}
     </main>
   );
