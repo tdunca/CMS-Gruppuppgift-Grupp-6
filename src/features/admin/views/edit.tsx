@@ -3,10 +3,21 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../../main';
 import { doc, getDoc, setDoc, updateDoc, collection } from 'firebase/firestore';
 import { uploadFile } from '../../firebase/upload';
+import Input from '../components/input';
 
 function Edit() {
   const [description, setDescription] = useState('');
-  const [name, setName] = useState('');
+  const [roomNum, setRoomNum] = useState(3);
+  const [homePrice, setHomePrice] = useState(30000000);
+  const [squareMeters, setSquareMeters] = useState(80);
+  const [homeAddress, setHomeAddress] = useState('');
+  const [postalCode, setPostalCode] = useState(12345);
+  const [homeCity, setHomeCity] = useState('');
+  const [landSquareMeters, setLandSquareMeters] = useState(500);
+  const [homeBuildYear, setHomeBuildYear] = useState(1980);
+  const [homeEnergyClass, setHomeEnergyClass] = useState('');
+  const [homeSpotlight, setHomeSpotlight] = useState(false);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -22,8 +33,9 @@ function Edit() {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const house = docSnap.data();
-        setName(house.name);
+
         setDescription(house.description);
+        // TODO: Add all data fields
       } else {
         console.error('No such document!');
       }
@@ -33,7 +45,7 @@ function Edit() {
   };
 
   const handleClick = async () => {
-    if (!description || !name) return; // TODO: better validation
+    // if (!description || !name) return; // TODO: better validation
 
     try {
       let houseDoc;
@@ -41,10 +53,34 @@ function Edit() {
         // Create a new document with an auto-generated ID
         const newDocRef = doc(collection(db, 'hus'));
         houseDoc = newDocRef;
-        await setDoc(houseDoc, { name, description });
+        await setDoc(houseDoc, {
+          description,
+          roomNum,
+          homePrice,
+          squareMeters,
+          homeAddress,
+          postalCode,
+          homeCity,
+          landSquareMeters,
+          homeBuildYear,
+          homeEnergyClass,
+          homeSpotlight,
+        });
       } else {
         houseDoc = doc(db, 'hus', id);
-        await updateDoc(houseDoc, { name, description });
+        await updateDoc(houseDoc, {
+          description,
+          roomNum,
+          homePrice,
+          squareMeters,
+          homeAddress,
+          postalCode,
+          homeCity,
+          landSquareMeters,
+          homeBuildYear,
+          homeEnergyClass,
+          homeSpotlight,
+        });
       }
 
       navigate('/admin/home');
@@ -60,20 +96,85 @@ function Edit() {
 
   return (
     <main>
-      <label>Name:</label>
-      <input
+      <Input
+        name="homeAddress"
+        label="Adress"
         type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={homeAddress}
+        onChange={(e) => setHomeAddress(e.target.value)}
       />
-      <label>Description:</label>
-      <input
+      <Input
+        name="postalCode"
+        label="Postnummer"
+        type="number"
+        value={postalCode}
+        onChange={(e) => setPostalCode(parseInt(e.target.value))}
+      />
+      <Input
+        name="homeCity"
+        label="Ort"
+        type="text"
+        value={homeCity}
+        onChange={(e) => setHomeCity(e.target.value)}
+      />
+      <Input
+        name="roomNum"
+        label="Antal rum"
+        type="number"
+        value={roomNum}
+        onChange={(e) => setRoomNum(parseInt(e.target.value))}
+      />
+      <Input
+        name="homePrice"
+        label="Pris"
+        type="number"
+        value={homePrice}
+        onChange={(e) => setHomePrice(parseInt(e.target.value))}
+      />
+      <Input
+        name="squareMeters"
+        label="Boarea"
+        type="number"
+        value={squareMeters}
+        onChange={(e) => setSquareMeters(parseInt(e.target.value))}
+      />
+      <Input
+        name="landSquareMeters"
+        label="Tomtarea"
+        type="number"
+        value={landSquareMeters}
+        onChange={(e) => setLandSquareMeters(parseInt(e.target.value))}
+      />
+      <Input
+        name="homeBuildYear"
+        label="Byggnadsår"
+        type="number"
+        value={homeBuildYear}
+        onChange={(e) => setHomeBuildYear(parseInt(e.target.value))}
+      />
+      <Input
+        name="homeEnergyClass"
+        label="Energiklass"
+        type="text"
+        value={homeEnergyClass}
+        onChange={(e) => setHomeEnergyClass(e.target.value)}
+      />
+      <Input
+        name="description"
+        label="Beskrivning"
         type="text"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <button onClick={handleClick}>Save House</button>
-      <input type="file" onChange={handleFileChange} />
+      <Input
+        name="homeSpotlight"
+        label="Spotlight"
+        type="checkbox"
+        checked={homeSpotlight}
+        onChange={() => setHomeSpotlight((val: boolean) => !val)}
+      />
+      <button onClick={handleClick}>Spara</button>
+      <input type="file" onChange={handleFileChange} />;
     </main>
   );
 }

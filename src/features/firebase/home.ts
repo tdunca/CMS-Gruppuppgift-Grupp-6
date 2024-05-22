@@ -2,7 +2,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { auth, db } from '../../main';
 import { type User } from 'firebase/auth';
 
-type HomeType = {
+type HomeType = { // TODO: Add all keys
   name: string;
   description: string;
 };
