@@ -1,28 +1,20 @@
-import { db } from '../../../main';
-import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../../../main';
+import { type HomeType, fetchAllHomes } from '../../firebase/home';
 
 function List() {
-  const [houses, setHouses] = useState([]);
+  const [houses, setHouses] = useState<HomeType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchHouses();
+    const onLoad = async () => {
+      const data = await fetchAllHomes();
+      if (data) setHouses(data);
+    };
+    onLoad();
   }, []);
-
-  const fetchHouses = async () => {
-    try {
-      const snapshot = await getDocs(collection(db, 'hus'));
-      const houseData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setHouses(houseData);
-    } catch (error) {
-      console.error('Error fetching houses: ', error);
-    }
-  };
 
   const deleteHouse = async (id) => {
     try {
