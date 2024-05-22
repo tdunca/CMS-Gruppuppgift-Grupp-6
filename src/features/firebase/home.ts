@@ -2,14 +2,23 @@ import { addDoc, collection } from 'firebase/firestore';
 import { auth, db } from '../../main';
 import { type User } from 'firebase/auth';
 
-type HomeType = { // TODO: Add all keys
-  name: string;
+type HomeType = {
   description: string;
+  roomNum: number;
+  homePrice: number;
+  squareMeters: number;
+  homeAddress: string;
+  postalCode: number;
+  homeCity: string;
+  landSquareMeters: number;
+  homeBuildYear: number;
+  homeEnergyClass: string;
+  homeSpotlight: boolean;
 };
 
 type HomeWithAgentType = HomeType & { agentEmail: User['email'] };
 
-export const saveHome = async (home: HomeType) => {
+export const saveHome = async (home: HomeType, id: string) => {
   const user = auth.currentUser;
 
   if (!user) {
@@ -21,7 +30,11 @@ export const saveHome = async (home: HomeType) => {
   const data: HomeWithAgentType = { ...home, agentEmail: user.email };
 
   try {
-    await addDoc(collection(db, 'hus'), data);
+    if (id !== 'new') {
+      await addDoc(collection(db, 'hus', id), data);
+    } else {
+      await addDoc(collection(db, 'hus'), data);
+    }
   } catch (error) {
     console.error('Error adding document: ', error);
   }

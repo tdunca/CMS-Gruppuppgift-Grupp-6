@@ -1,7 +1,8 @@
-import { useState, useEffect, ChangeEvent } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { db } from '../../../main';
-import { doc, getDoc, setDoc, updateDoc, collection } from 'firebase/firestore';
+import { saveHome } from '../../firebase/home';
 import { uploadFile } from '../../firebase/upload';
 import Input from '../components/input';
 
@@ -45,48 +46,26 @@ function Edit() {
   };
 
   const handleClick = async () => {
+    if (!id) return;
+
     // if (!description || !name) return; // TODO: better validation
+    const houseData = {
+      description,
+      roomNum,
+      homePrice,
+      squareMeters,
+      homeAddress,
+      postalCode,
+      homeCity,
+      landSquareMeters,
+      homeBuildYear,
+      homeEnergyClass,
+      homeSpotlight,
+    };
 
-    try {
-      let houseDoc;
-      if (id === 'new') {
-        // Create a new document with an auto-generated ID
-        const newDocRef = doc(collection(db, 'hus'));
-        houseDoc = newDocRef;
-        await setDoc(houseDoc, {
-          description,
-          roomNum,
-          homePrice,
-          squareMeters,
-          homeAddress,
-          postalCode,
-          homeCity,
-          landSquareMeters,
-          homeBuildYear,
-          homeEnergyClass,
-          homeSpotlight,
-        });
-      } else {
-        houseDoc = doc(db, 'hus', id);
-        await updateDoc(houseDoc, {
-          description,
-          roomNum,
-          homePrice,
-          squareMeters,
-          homeAddress,
-          postalCode,
-          homeCity,
-          landSquareMeters,
-          homeBuildYear,
-          homeEnergyClass,
-          homeSpotlight,
-        });
-      }
+    saveHome(houseData, id);
 
-      navigate('/admin/home');
-    } catch (error) {
-      console.error('Error saving document: ', error);
-    }
+    navigate('/admin/home');
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
