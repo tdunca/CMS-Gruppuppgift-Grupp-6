@@ -1,8 +1,6 @@
-import { doc, getDoc } from 'firebase/firestore';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { db } from '../../../main';
-import { saveHome } from '../../firebase/home';
+import { fetchHouseById, saveHome } from '../../firebase/home';
 import { uploadFile } from '../../firebase/upload';
 import Input from '../components/input';
 
@@ -23,27 +21,26 @@ function Edit() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id !== 'new') {
-      fetchHouse();
-    }
+    if (!id || id === 'new') return;
+
+    const onLoad = async () => {
+      const house = await fetchHouseById(id);
+      if (!house) return;
+
+      setDescription(house.description);
+      setRoomNum(house.roomNum);
+      setHomePrice(house.homePrice);
+      setSquareMeters(house.squareMeters);
+      setHomeAddress(house.homeAddress);
+      setPostalCode(house.postalCode);
+      setHomeCity(house.homeCity);
+      setLandSquareMeters(house.landSquareMeters);
+      setHomeBuildYear(house.homeBuildYear);
+      setHomeEnergyClass(house.homeEnergyClass);
+      setHomeSpotlight(house.homeSpotlight);
+    };
+    onLoad();
   }, [id]);
-
-  const fetchHouse = async () => {
-    try {
-      const docRef = doc(db, 'hus', id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const house = docSnap.data();
-
-        setDescription(house.description);
-        // TODO: Add all data fields
-      } else {
-        console.error('No such document!');
-      }
-    } catch (error) {
-      console.error('Error fetching document: ', error);
-    }
-  };
 
   const handleClick = async () => {
     if (!id) return;
@@ -153,7 +150,7 @@ function Edit() {
         onChange={() => setHomeSpotlight((val: boolean) => !val)}
       />
       <button onClick={handleClick}>Spara</button>
-      <input type="file" onChange={handleFileChange} />;
+      <input type="file" onChange={handleFileChange} />
     </main>
   );
 }
