@@ -7,6 +7,7 @@ import Details from './features/customer/views/details';
 import Home from './features/customer/views/home';
 import UserRoot from './features/customer/views/userRoot';
 import ErrorPage from './features/error/errorPage';
+import Result from './features/customer/views/result';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: 'home/:name',
         element: <Details />,
+      },
+      {
+        path: 'result',
+        element: <Result />,
       },
     ],
   },

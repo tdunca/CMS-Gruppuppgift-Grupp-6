@@ -1,12 +1,21 @@
 import { useState } from 'react';
 import Style from './header.module.css';
 import { searchHouse } from '../../firebase/home';
+import { useNavigate } from 'react-router-dom';
+type HeaderProps = {
+  setResult: (result: any) => void;
+};
 
-function Header() {
+function Header({ setResult }: HeaderProps) {
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
   const handleSearch = async () => {
     const result = await searchHouse(search);
-    console.log(result);
+    if (!result.length) {
+      return;
+    }
+    setResult(result);
+    navigate('/result');
   };
 
   return (
