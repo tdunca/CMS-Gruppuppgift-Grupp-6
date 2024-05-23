@@ -1,4 +1,11 @@
-import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import { auth, db } from '../../main';
 
 type HomeInputType = {
@@ -32,10 +39,11 @@ export const saveHome = async (home: HomeInputType, id: string) => {
 
   try {
     if (id !== 'new') {
-      await addDoc(collection(db, 'hus', id), data);
+      await updateDoc(doc(db, 'hus', id), data);
     } else {
       await addDoc(collection(db, 'hus'), data);
     }
+    return true;
   } catch (error) {
     console.error('Error adding document: ', error);
   }

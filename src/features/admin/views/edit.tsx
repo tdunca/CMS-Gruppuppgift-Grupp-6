@@ -60,9 +60,9 @@ function Edit() {
       homeSpotlight,
     };
 
-    saveHome(houseData, id);
+    const success = await saveHome(houseData, id);
 
-    navigate('/admin/home');
+    if (success) navigate('/admin/home');
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
