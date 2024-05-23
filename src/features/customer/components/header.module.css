@@ -1,5 +1,31 @@
 .header {
-  text-align: center;
+  display: flex;
+  align-items: center;
   width: 100vw;
   background-color: green;
+}
+
+.logo {
+  flex: 1;
+  /* background-color: blue; */
+}
+
+.buttonContainer {
+  display: flex;
+
+  padding-inline: 1rem;
+  gap: 1rem;
+  display: flex;
+  /* background-color: red; */
+}
+
+.label {
+  border: 0;
+  border-radius: 0.4rem;
+  background-color: lightgrey;
+  color: black;
+}
+
+.button {
+  background-color: black;
 }
