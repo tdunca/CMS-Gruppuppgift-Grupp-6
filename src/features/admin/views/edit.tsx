@@ -155,6 +155,11 @@ function Edit() {
         checked={homeSpotlight}
         onChange={() => setHomeSpotlight((val: boolean) => !val)}
       />
+      <div>
+        {imageUrls.map((url) => (
+          <img src={url} />
+        ))}
+      </div>
       <button onClick={handleClick}>Spara</button>
       <input type="file" onChange={handleFileChange} />
     </main>
