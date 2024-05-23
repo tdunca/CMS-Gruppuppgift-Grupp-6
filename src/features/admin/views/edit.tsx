@@ -16,6 +16,7 @@ function Edit() {
   const [homeBuildYear, setHomeBuildYear] = useState(1980);
   const [homeEnergyClass, setHomeEnergyClass] = useState('');
   const [homeSpotlight, setHomeSpotlight] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]); // Add state for image URL
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function Edit() {
       setHomeBuildYear(house.homeBuildYear);
       setHomeEnergyClass(house.homeEnergyClass);
       setHomeSpotlight(house.homeSpotlight);
+      setImageUrls(house.imageUrls || []); // Initialize image URL
     };
     onLoad();
   }, [id]);
@@ -58,6 +60,7 @@ function Edit() {
       homeBuildYear,
       homeEnergyClass,
       homeSpotlight,
+      imageUrls, // Include image URL
     };
 
     const success = await saveHome(houseData, id);
@@ -65,9 +68,12 @@ function Edit() {
     if (success) navigate('/admin/home');
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
-    uploadFile(e.target.files[0]);
+    const file = e.target.files[0];
+    const url = await uploadFile(file);
+    setImageUrls((prevUrls) => [...prevUrls, url]); // Add new URL to existing array
+    console.log('Uploaded Image URL:', url); // Log uploaded image URL
   };
 
   return (
