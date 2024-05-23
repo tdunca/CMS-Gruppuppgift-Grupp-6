@@ -1,21 +1,49 @@
+import { deleteDoc, doc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../../../main';
-import { getDocs, collection } from 'firebase/firestore';
-import { useState } from 'react';
+import { fetchAllHomes, type HomeType } from '../../firebase/home';
 
 function List() {
-  const [houses, setHouses] = useState<string[]>([]);
+  const [houses, setHouses] = useState<HomeType[]>([]);
+  const navigate = useNavigate();
 
-  async function handleClick() {
-    const snapshot = await getDocs(collection(db, 'hus'));
+  useEffect(() => {
+    const onLoad = async () => {
+      const data = await fetchAllHomes();
+      if (data) setHouses(data);
+    };
+    onLoad();
+  }, []);
 
-    setHouses(snapshot.docs.map((doc) => doc.data().name));
-    console.log(houses);
-  }
+  const deleteHouse = async (id: string) => {
+    try {
+      const houseDoc = doc(db, 'hus', id);
+      await deleteDoc(houseDoc);
+      // After deletion, update the house list to reflect the changes
+      setHouses((prevHouses) => prevHouses.filter((house) => house.id !== id));
+    } catch (error) {
+      console.error('Error deleting document: ', error);
+    }
+  };
+
+  const handleNavigate = (id: string) => {
+    navigate(`/admin/home/edit/${id}`);
+  };
 
   return (
     <main>
-      <button onClick={handleClick}>Hämta hus för fan!</button>
-      {houses && houses.map((house, index) => <div key={index}>{house}</div>)}
+      <button onClick={() => handleNavigate('new')}>Add New House</button>
+      {houses.map((house) => (
+        <article key={house.id}>
+          {/* TODO: Insert picture*/}
+          <p>{`${house.homeAddress} ${house.homeCity}`}</p>
+          <div>
+            <button onClick={() => handleNavigate(house.id)}>Edit</button>
+            <button onClick={() => deleteHouse(house.id)}>Delete</button>
+          </div>
+        </article>
+      ))}
     </main>
   );
 }
