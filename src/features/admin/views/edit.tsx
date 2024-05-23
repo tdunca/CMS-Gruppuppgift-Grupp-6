@@ -22,14 +22,16 @@ function Edit() {
 
   return (
     <main>
-      <label>Description:</label>
+      <label htmlFor="description">Description:</label>
       <input
+        id="description"
         type="text"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
       <button onClick={handleClick}>Lägg till hus för fan!</button>
-      <input type="file" onChange={handleFileChange} />;
+      <label htmlFor="fileUpload">upload file here</label>
+      <input id="fileUpload" type="file" onChange={handleFileChange} />;
     </main>
   );
 }

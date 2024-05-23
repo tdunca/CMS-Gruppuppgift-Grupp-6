@@ -1,4 +1,3 @@
-
 import { db } from '../../../main';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import { useState } from 'react';
@@ -8,7 +7,7 @@ function Footer() {
   const [search, setSearch] = useState('');
 
   async function handleClick() {
-    const q = query(collection(db, 'hus'), where('name', '==', search));
+    const q = query(collection(db, 'hus'), where('description', '==', search));
     const snapshot = await getDocs(q);
     const houses = snapshot.docs.map((doc) => doc.data());
     setHouses(houses);
@@ -28,7 +27,6 @@ function Footer() {
       FOOTER FÖR FAN!
     </>
   );
-
 }
 
 export default Footer;
