@@ -9,6 +9,7 @@ import {
   query,
   updateDoc,
   where,
+  or,
 } from 'firebase/firestore';
 import { auth, db } from '../../main';
 
@@ -86,6 +87,20 @@ export const fetchHouseById = async (id: string) => {
 
 export const fetchSpotlightHomes = async () => {
   const q = query(collection(db, 'hus'), where('homeSpotlight', '==', true));
+  const snapshot = await getDocs(q);
+
+  return parseHomeData(snapshot) as HomeType[];
+};
+
+export const searchHouse = async (searchTerm: string) => {
+  const q = query(
+    collection(db, 'hus'),
+    or(
+      where('roomNum', '==', parseInt(searchTerm)),
+      where('homePrice', '<', parseInt(searchTerm)),
+      where('homeCity', '==', searchTerm)
+    )
+  );
   const snapshot = await getDocs(q);
 
   return parseHomeData(snapshot) as HomeType[];
