@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchHouseById, saveHome } from '../../firebase/home';
+import { HomeType, fetchHouseById, saveHome } from '../../firebase/home';
 import { uploadFile } from '../../firebase/upload';
 import Input from '../components/input';
 
@@ -16,7 +16,7 @@ function Edit() {
   const [homeBuildYear, setHomeBuildYear] = useState(1980);
   const [homeEnergyClass, setHomeEnergyClass] = useState('');
   const [homeSpotlight, setHomeSpotlight] = useState(false);
-  const [imageUrls, setImageUrls] = useState([]); // Add state for image URL
+  const [imageUrls, setImageUrls] = useState<HomeType['imageUrls']>([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ function Edit() {
       setHomeBuildYear(house.homeBuildYear);
       setHomeEnergyClass(house.homeEnergyClass);
       setHomeSpotlight(house.homeSpotlight);
-      setImageUrls(house.imageUrls || []); // Initialize image URL
+      setImageUrls(house.imageUrls);
     };
     onLoad();
   }, [id]);

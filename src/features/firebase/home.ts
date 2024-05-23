@@ -20,6 +20,7 @@ type HomeInputType = {
   homeBuildYear: number;
   homeEnergyClass: string;
   homeSpotlight: boolean;
+  imageUrls: string[];
 };
 
 type HomeWithAgentType = HomeInputType & { agentEmail: string };
