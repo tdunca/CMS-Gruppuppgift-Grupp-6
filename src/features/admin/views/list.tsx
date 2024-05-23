@@ -1,31 +1,22 @@
-import { db } from '../../../main';
-import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../../../main';
+import { fetchAllHomes, type HomeType } from '../../firebase/home';
 
 function List() {
-  const [houses, setHouses] = useState([]);
+  const [houses, setHouses] = useState<HomeType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchHouses();
+    const onLoad = async () => {
+      const data = await fetchAllHomes();
+      if (data) setHouses(data);
+    };
+    onLoad();
   }, []);
 
-  const fetchHouses = async () => {
-    try {
-      const snapshot = await getDocs(collection(db, 'hus'));
-      const houseData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log('Fetched Houses:', houseData); // Log fetched data
-      setHouses(houseData);
-    } catch (error) {
-      console.error('Error fetching houses: ', error);
-    }
-  };
-
-  const deleteHouse = async (id) => {
+  const deleteHouse = async (id: string) => {
     try {
       const houseDoc = doc(db, 'hus', id);
       await deleteDoc(houseDoc);
@@ -36,19 +27,22 @@ function List() {
     }
   };
 
-  const handleNavigate = (id) => {
+  const handleNavigate = (id: string) => {
     navigate(`/admin/home/edit/${id}`);
   };
 
   return (
     <main>
       <button onClick={() => handleNavigate('new')}>Add New House</button>
-      {houses.map((house, index) => (
-        <div key={house.id}>
-          <div>{house.name}</div>
-          <button onClick={() => handleNavigate(house.id)}>Edit</button>
-          <button onClick={() => deleteHouse(house.id)}>Delete</button>
-        </div>
+      {houses.map((house) => (
+        <article key={house.id}>
+          {/* TODO: Insert picture*/}
+          <p>{`${house.homeAddress} ${house.homeCity}`}</p>
+          <div>
+            <button onClick={() => handleNavigate(house.id)}>Edit</button>
+            <button onClick={() => deleteHouse(house.id)}>Delete</button>
+          </div>
+        </article>
       ))}
     </main>
   );

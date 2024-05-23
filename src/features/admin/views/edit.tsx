@@ -1,8 +1,6 @@
-import { doc, getDoc } from 'firebase/firestore';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { db } from '../../../main';
-import { saveHome } from '../../firebase/home';
+import { fetchHouseById, saveHome } from '../../firebase/home';
 import { uploadFile } from '../../firebase/upload';
 import Input from '../components/input';
 
@@ -24,38 +22,27 @@ function Edit() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id !== 'new') {
-      fetchHouse();
-    }
-  }, [id]);
+    if (!id || id === 'new') return;
 
-  const fetchHouse = async () => {
-    try {
-      const docRef = doc(db, 'hus', id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const house = docSnap.data();
-        console.log('Fetched House:', house); // Log fetched house data
-        // TODO: Add all data fields
-        setDescription(house.description);
-        setRoomNum(house.roomNum || 3);
-        setHomePrice(house.homePrice || 30000000);
-        setSquareMeters(house.squareMeters || 80);
-        setHomeAddress(house.homeAddress || '');
-        setPostalCode(house.postalCode || 12345);
-        setHomeCity(house.homeCity || '');
-        setLandSquareMeters(house.landSquareMeters || 500);
-        setHomeBuildYear(house.homeBuildYear || 1980);
-        setHomeEnergyClass(house.homeEnergyClass || '');
-        setHomeSpotlight(house.homeSpotlight || false);
-        setImageUrls(house.imageUrls || []); // Initialize image URL
-      } else {
-        console.error('No such document!');
-      }
-    } catch (error) {
-      console.error('Error fetching document: ', error);
-    }
-  };
+    const onLoad = async () => {
+      const house = await fetchHouseById(id);
+      if (!house) return;
+
+      setDescription(house.description);
+      setRoomNum(house.roomNum);
+      setHomePrice(house.homePrice);
+      setSquareMeters(house.squareMeters);
+      setHomeAddress(house.homeAddress);
+      setPostalCode(house.postalCode);
+      setHomeCity(house.homeCity);
+      setLandSquareMeters(house.landSquareMeters);
+      setHomeBuildYear(house.homeBuildYear);
+      setHomeEnergyClass(house.homeEnergyClass);
+      setHomeSpotlight(house.homeSpotlight);
+      setImageUrls(house.imageUrls || []); // Initialize image URL
+    };
+    onLoad();
+  }, [id]);
 
   const handleClick = async () => {
     if (!id) return;
@@ -75,10 +62,10 @@ function Edit() {
       homeSpotlight,
       imageUrls, // Include image URL
     };
-    console.log('Saving House Data:', houseData); // Log data being saved
-    saveHome(houseData, id);
 
-    navigate('/admin/home');
+    const success = await saveHome(houseData, id);
+
+    if (success) navigate('/admin/home');
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -169,7 +156,7 @@ function Edit() {
         onChange={() => setHomeSpotlight((val: boolean) => !val)}
       />
       <button onClick={handleClick}>Spara</button>
-      <input type="file" onChange={handleFileChange} />;
+      <input type="file" onChange={handleFileChange} />
     </main>
   );
 }
