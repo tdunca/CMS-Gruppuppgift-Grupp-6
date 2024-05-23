@@ -1,10 +1,14 @@
 import {
+  type DocumentData,
+  type QuerySnapshot,
   addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from 'firebase/firestore';
 import { auth, db } from '../../main';
 
@@ -26,6 +30,12 @@ type HomeInputType = {
 type HomeWithAgentType = HomeInputType & { agentEmail: string };
 
 export type HomeType = HomeWithAgentType & { id: string };
+
+const parseHomeData = (data: QuerySnapshot<DocumentData, DocumentData>) =>
+  data.docs.map((doc) => ({
+    id: doc.id,
+    ...(doc.data() as HomeWithAgentType),
+  }));
 
 export const saveHome = async (home: HomeInputType, id: string) => {
   const user = auth.currentUser;
@@ -53,11 +63,8 @@ export const saveHome = async (home: HomeInputType, id: string) => {
 export const fetchAllHomes = async () => {
   try {
     const snapshot = await getDocs(collection(db, 'hus'));
-    const houseData = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as HomeWithAgentType),
-    }));
-    return houseData as unknown as HomeType[];
+
+    return parseHomeData(snapshot) as HomeType[];
   } catch (error) {
     console.error('Error fetching houses: ', error);
   }
@@ -75,4 +82,11 @@ export const fetchHouseById = async (id: string) => {
   } catch (error) {
     console.error('Error fetching document: ', error);
   }
+};
+
+export const fetchSpotlightHomes = async () => {
+  const q = query(collection(db, 'hus'), where('homeSpotlight', '==', true));
+  const snapshot = await getDocs(q);
+
+  return parseHomeData(snapshot) as HomeType[];
 };
