@@ -1,29 +1,31 @@
 .header {
-  text-align: center;
+  display: flex;
+  align-items: center;
   width: 100vw;
   background-color: green;
 }
 
-.container {
-  display: flex;
-  justify-content: end;
-  margin-top: 20px;
-  gap: 4rem;
-  padding-block: 2rem;
-  padding-inline: 1rem;
-}
-
 .logo {
-  display: flex;
-  justify-content: start;
-  justify-content: center;
-  padding-block: 1rem;
+  flex: 1;
+  /* background-color: blue; */
 }
 
 .buttonContainer {
   display: flex;
-  align-items: end;
-  justify-content: end;
-  gap: 2rem;
-  padding-block: 1rem;
+
+  padding-inline: 1rem;
+  gap: 1rem;
+  display: flex;
+  /* background-color: red; */
+}
+
+.label {
+  border: 0;
+  border-radius: 0.4rem;
+  background-color: lightgrey;
+  color: black;
+}
+
+.button {
+  background-color: black;
 }
