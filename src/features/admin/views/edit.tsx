@@ -18,6 +18,7 @@ function Edit() {
   const [homeBuildYear, setHomeBuildYear] = useState(1980);
   const [homeEnergyClass, setHomeEnergyClass] = useState('');
   const [homeSpotlight, setHomeSpotlight] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]); // Add state for image URL
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -34,9 +35,20 @@ function Edit() {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const house = docSnap.data();
-
-        setDescription(house.description);
+        console.log('Fetched House:', house); // Log fetched house data
         // TODO: Add all data fields
+        setDescription(house.description);
+        setRoomNum(house.roomNum || 3);
+        setHomePrice(house.homePrice || 30000000);
+        setSquareMeters(house.squareMeters || 80);
+        setHomeAddress(house.homeAddress || '');
+        setPostalCode(house.postalCode || 12345);
+        setHomeCity(house.homeCity || '');
+        setLandSquareMeters(house.landSquareMeters || 500);
+        setHomeBuildYear(house.homeBuildYear || 1980);
+        setHomeEnergyClass(house.homeEnergyClass || '');
+        setHomeSpotlight(house.homeSpotlight || false);
+        setImageUrls(house.imageUrls || []); // Initialize image URL
       } else {
         console.error('No such document!');
       }
@@ -61,16 +73,20 @@ function Edit() {
       homeBuildYear,
       homeEnergyClass,
       homeSpotlight,
+      imageUrls, // Include image URL
     };
-
+    console.log('Saving House Data:', houseData); // Log data being saved
     saveHome(houseData, id);
 
     navigate('/admin/home');
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
-    uploadFile(e.target.files[0]);
+    const file = e.target.files[0];
+    const url = await uploadFile(file);
+    setImageUrls((prevUrls) => [...prevUrls, url]); // Add new URL to existing array
+    console.log('Uploaded Image URL:', url); // Log uploaded image URL
   };
 
   return (

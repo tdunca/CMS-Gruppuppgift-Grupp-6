@@ -18,6 +18,7 @@ function List() {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log('Fetched Houses:', houseData); // Log fetched data
       setHouses(houseData);
     } catch (error) {
       console.error('Error fetching houses: ', error);

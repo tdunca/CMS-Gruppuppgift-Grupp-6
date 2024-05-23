@@ -1,12 +1,9 @@
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../main';
 
-export const uploadFile = async (file: File) => {
+export const uploadFile = async (file) => {
   const storageRef = ref(storage, `images/${file.name}`);
-  try {
-    const snapshot = await uploadBytes(storageRef, file);
-    console.log('Uploaded a blob or file!', snapshot);
-  } catch (error) {
-    console.error('Upload failed', error);
-  }
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
+  return url;
 };
