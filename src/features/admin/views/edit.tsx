@@ -27,19 +27,20 @@ function Edit() {
     const onLoad = async () => {
       const house = await fetchHouseById(id);
       if (!house) return;
+      const { homeData } = house;
 
-      setDescription(house.description);
-      setRoomNum(house.roomNum);
-      setHomePrice(house.homePrice);
-      setSquareMeters(house.squareMeters);
-      setHomeAddress(house.homeAddress);
-      setPostalCode(house.postalCode);
-      setHomeCity(house.homeCity);
-      setLandSquareMeters(house.landSquareMeters);
-      setHomeBuildYear(house.homeBuildYear);
-      setHomeEnergyClass(house.homeEnergyClass);
-      setHomeSpotlight(house.homeSpotlight);
-      setImageUrls(house.imageUrls);
+      setDescription(homeData.description);
+      setRoomNum(homeData.roomNum);
+      setHomePrice(homeData.homePrice);
+      setSquareMeters(homeData.squareMeters);
+      setHomeAddress(homeData.homeAddress);
+      setPostalCode(homeData.postalCode);
+      setHomeCity(homeData.homeCity);
+      setLandSquareMeters(homeData.landSquareMeters);
+      setHomeBuildYear(homeData.homeBuildYear);
+      setHomeEnergyClass(homeData.homeEnergyClass);
+      setHomeSpotlight(homeData.homeSpotlight);
+      setImageUrls(homeData.imageUrls);
     };
     onLoad();
   }, [id]);

@@ -12,6 +12,7 @@ import {
   or,
 } from 'firebase/firestore';
 import { auth, db } from '../../main';
+import { type AgentType } from './user';
 
 type HomeInputType = {
   description: string;
@@ -28,7 +29,7 @@ type HomeInputType = {
   imageUrls: string[];
 };
 
-type HomeWithAgentType = HomeInputType & { agentEmail: string };
+type HomeWithAgentType = HomeInputType & { agentId: string };
 
 export type HomeType = HomeWithAgentType & { id: string };
 
@@ -37,6 +38,15 @@ const parseHomeData = (data: QuerySnapshot<DocumentData, DocumentData>) =>
     id: doc.id,
     ...(doc.data() as HomeWithAgentType),
   }));
+
+const fetchAgentById = async (id: string) => {
+  const agentSnapshot = await getDoc(doc(db, 'users', id));
+  if (!agentSnapshot.exists()) {
+    throw new Error('Agent does not exist');
+  }
+
+  return agentSnapshot.data() as AgentType;
+};
 
 export const saveHome = async (home: HomeInputType, id: string) => {
   const user = auth.currentUser;
@@ -47,7 +57,7 @@ export const saveHome = async (home: HomeInputType, id: string) => {
   }
   console.log({ user });
 
-  const data: HomeWithAgentType = { ...home, agentEmail: user.email || '' };
+  const data: HomeWithAgentType = { ...home, agentId: user.uid };
 
   try {
     if (id !== 'new') {
@@ -76,7 +86,9 @@ export const fetchHouseById = async (id: string) => {
     const docRef = doc(db, 'hus', id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data() as HomeType;
+      const homeData = docSnap.data() as HomeType;
+      const agentData = await fetchAgentById(homeData.agentId);
+      return { homeData, agentData };
     } else {
       console.error('No such document!');
     }
