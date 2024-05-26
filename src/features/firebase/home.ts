@@ -1,15 +1,17 @@
 import {
-  type DocumentData,
-  type QuerySnapshot,
   addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
+  or,
   query,
   updateDoc,
   where,
-  or,
+  type DocumentData,
+  type QueryDocumentSnapshot,
+  type QuerySnapshot,
+  type SnapshotOptions,
 } from 'firebase/firestore';
 import { auth, db } from '../../main';
 
@@ -28,14 +30,28 @@ type HomeInputType = {
   imageUrls: string[];
 };
 
-type HomeWithAgentType = HomeInputType & { agentEmail: string };
+type HomeWithAgentType = HomeInputType & { agentId: string };
 
 export type HomeType = HomeWithAgentType & { id: string };
 
-const parseHomeData = (data: QuerySnapshot<DocumentData, DocumentData>) =>
-  data.docs.map((doc) => ({
+const homeConverter = {
+  toFirestore(home: HomeWithAgentType): DocumentData {
+    return home;
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ): HomeWithAgentType {
+    return snapshot.data(options) as HomeWithAgentType;
+  },
+};
+
+const parseHomeData = (
+  snapshot: QuerySnapshot<HomeWithAgentType, DocumentData>
+): HomeType[] =>
+  snapshot.docs.map((doc) => ({
     id: doc.id,
-    ...(doc.data() as HomeWithAgentType),
+    ...doc.data(),
   }));
 
 export const saveHome = async (home: HomeInputType, id: string) => {
@@ -47,13 +63,13 @@ export const saveHome = async (home: HomeInputType, id: string) => {
   }
   console.log({ user });
 
-  const data: HomeWithAgentType = { ...home, agentEmail: user.email || '' };
+  const data: HomeWithAgentType = { ...home, agentId: '' };
 
   try {
     if (id !== 'new') {
-      await updateDoc(doc(db, 'hus', id), data);
+      await updateDoc(doc(db, 'hus', id).withConverter(homeConverter), data);
     } else {
-      await addDoc(collection(db, 'hus'), data);
+      await addDoc(collection(db, 'hus').withConverter(homeConverter), data);
     }
     return true;
   } catch (error) {
@@ -63,9 +79,11 @@ export const saveHome = async (home: HomeInputType, id: string) => {
 
 export const fetchAllHomes = async () => {
   try {
-    const snapshot = await getDocs(collection(db, 'hus'));
+    const snapshot = await getDocs(
+      collection(db, 'hus').withConverter(homeConverter)
+    );
 
-    return parseHomeData(snapshot) as HomeType[];
+    return parseHomeData(snapshot);
   } catch (error) {
     console.error('Error fetching houses: ', error);
   }
@@ -73,10 +91,10 @@ export const fetchAllHomes = async () => {
 
 export const fetchHouseById = async (id: string) => {
   try {
-    const docRef = doc(db, 'hus', id);
+    const docRef = doc(db, 'hus', id).withConverter(homeConverter);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data() as HomeType;
+      return docSnap.data();
     } else {
       console.error('No such document!');
     }
@@ -86,15 +104,18 @@ export const fetchHouseById = async (id: string) => {
 };
 
 export const fetchSpotlightHomes = async () => {
-  const q = query(collection(db, 'hus'), where('homeSpotlight', '==', true));
+  const q = query(
+    collection(db, 'hus').withConverter(homeConverter),
+    where('homeSpotlight', '==', true)
+  );
   const snapshot = await getDocs(q);
 
-  return parseHomeData(snapshot) as HomeType[];
+  return parseHomeData(snapshot);
 };
 
 export const searchHouse = async (searchTerm: string) => {
   const q = query(
-    collection(db, 'hus'),
+    collection(db, 'hus').withConverter(homeConverter),
     or(
       where('roomNum', '==', parseInt(searchTerm)),
       where('homePrice', '<', parseInt(searchTerm)),
@@ -103,5 +124,5 @@ export const searchHouse = async (searchTerm: string) => {
   );
   const snapshot = await getDocs(q);
 
-  return parseHomeData(snapshot) as HomeType[];
+  return parseHomeData(snapshot);
 };
