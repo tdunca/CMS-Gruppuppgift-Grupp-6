@@ -1,7 +1,12 @@
 import { deleteObject, getStorage, ref } from 'firebase/storage'; // Import Firebase Storage methods
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchHomeById, saveHome, type Home } from '../../shared/firebase/home';
+import {
+  fetchHomeById,
+  saveHome,
+  updateHomeById,
+  type Home,
+} from '../../shared/firebase/home';
 import { uploadFile } from '../../shared/firebase/upload';
 import Input from '../components/input';
 
@@ -47,26 +52,26 @@ function Edit() {
     onLoad();
   }, [id]);
 
-  const homeData = {
-    coverImage,
-    description,
-    roomNum,
-    homePrice,
-    squareMeters,
-    homeAddress,
-    postalCode,
-    homeCity,
-    landSquareMeters,
-    homeBuildYear,
-    homeEnergyClass,
-    homeSpotlight,
-    imageUrls,
-  };
-
   const handleSave = async () => {
     if (!id) return;
 
     // if (!description || !name) return; // TODO: better validation
+
+    const homeData = {
+      coverImage,
+      description,
+      roomNum,
+      homePrice,
+      squareMeters,
+      homeAddress,
+      postalCode,
+      homeCity,
+      landSquareMeters,
+      homeBuildYear,
+      homeEnergyClass,
+      homeSpotlight,
+      imageUrls,
+    };
 
     const success = await saveHome(homeData, id);
 
@@ -94,11 +99,8 @@ function Edit() {
 
       if (id && id !== 'new') {
         // Update Firestore
-        await saveHome(
-          {
-            ...homeData,
-            imageUrls: updatedImages, // Include the updated image URLs
-          },
+        await updateHomeById(
+          isCoverImage ? { coverImage } : { imageUrls: updatedImages },
           id
         );
         console.log('Image reference deleted successfully from Firestore.');

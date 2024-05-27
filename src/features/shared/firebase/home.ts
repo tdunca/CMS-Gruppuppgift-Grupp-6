@@ -78,6 +78,20 @@ export const saveHome = async (home: HomeFirestoreInput, id: string) => {
   }
 };
 
+export const updateHomeById = async (
+  homeUpdate: Partial<HomeFirestoreInput>,
+  id: string
+) => {
+  try {
+    await updateDoc(
+      doc(db, 'hus', id).withConverter(homeConverter),
+      homeUpdate
+    );
+  } catch (error) {
+    console.error('Error updating document: ', error);
+  }
+};
+
 export const fetchAllHomes = async () => {
   try {
     const snapshot = await getDocs(
