@@ -1,23 +1,25 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchSpotlightHomes, type Home } from '../../shared/firebase/home';
 
 function Start() {
-  const [homes, setHomes] = useState<Home[]>([]);
+  const [houses, setHouses] = useState<Home[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onLoad = async () => {
       const data = await fetchSpotlightHomes();
-      if (data) setHomes(data);
+      if (data) setHouses(data);
     };
     onLoad();
   }, []);
 
   return (
     <main>
-      {homes.map((home) => (
-        <article key={home.id}>
-          <img src={home.coverImage} alt="Ett av våra hem för fan!" />
-          <p>{home.description}</p>
+      {houses.map((house) => (
+        <article key={house.id} onClick={() => navigate('home/' + house.id)}>
+          <img src={house.coverImage} alt="Ett av våra hem för fan!" />
+          <p>{house.description}</p>
         </article>
       ))}
     </main>

@@ -14,6 +14,7 @@ import {
   type SnapshotOptions,
 } from 'firebase/firestore';
 import { auth, db } from '../../../main';
+import { AgentData } from './user';
 
 type HomeFirestoreInput = {
   coverImage: string;
@@ -54,6 +55,15 @@ const parseHomeData = (
     id: doc.id,
     ...doc.data(),
   }));
+
+const fetchAgentById = async (id: string) => {
+  const agentSnapshot = await getDoc(doc(db, 'users', id));
+  if (!agentSnapshot.exists()) {
+    throw new Error('AgentData does not exist');
+  }
+
+  return agentSnapshot.data() as AgentData;
+};
 
 export const saveHome = async (home: HomeFirestoreInput, id: string) => {
   const user = auth.currentUser;
@@ -109,7 +119,9 @@ export const fetchHomeById = async (id: string) => {
     const docRef = doc(db, 'hus', id).withConverter(homeConverter);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data();
+      const homeData = docSnap.data();
+      const agentData = await fetchAgentById(homeData.agentId);
+      return { homeData, agentData };
     } else {
       console.error('No such document!');
     }
