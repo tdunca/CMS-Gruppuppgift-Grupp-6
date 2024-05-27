@@ -13,7 +13,7 @@ import {
   type QuerySnapshot,
   type SnapshotOptions,
 } from 'firebase/firestore';
-import { auth, db } from '../../main';
+import { auth, db } from '../../../main';
 
 type HomeFirestoreInput = {
   coverImage: string;

@@ -3,7 +3,7 @@ import { deleteObject, getStorage, ref } from 'firebase/storage'; // Add this im
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../../main';
-import { fetchAllHomes, type Home } from '../../firebase/home';
+import { fetchAllHomes, type Home } from '../../shared/firebase/home';
 
 function List() {
   const [homes, setHomes] = useState<Home[]>([]);

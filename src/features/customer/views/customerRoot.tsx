@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { type Home } from '../../firebase/home';
+import { type Home } from '../../shared/firebase/home';
 import Footer from '../components/footer';
 import Header from '../components/header';
-import Style from './userRoot.module.css';
+import Style from './customerRoot.module.css';
 
 function UserRoot() {
   const [result, setResult] = useState<Home[]>([]);

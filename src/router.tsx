@@ -3,21 +3,21 @@ import AdminRoot from './features/admin/views/adminRoot';
 import Edit from './features/admin/views/edit';
 import List from './features/admin/views/list';
 import SignIn from './features/admin/views/signIn';
+import CustomerRoot from './features/customer/views/customerRoot';
 import Details from './features/customer/views/details';
-import Home from './features/customer/views/home';
-import UserRoot from './features/customer/views/userRoot';
-import ErrorPage from './features/error/errorPage';
 import Result from './features/customer/views/result';
+import Start from './features/customer/views/start';
+import ErrorPage from './features/shared/error/errorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <UserRoot />,
+    element: <CustomerRoot />,
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Start />,
       },
       {
         path: 'home/:name',
@@ -32,6 +32,7 @@ const router = createBrowserRouter([
   {
     path: '/admin',
     element: <AdminRoot />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

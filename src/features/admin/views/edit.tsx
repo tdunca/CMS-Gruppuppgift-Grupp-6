@@ -1,8 +1,8 @@
 import { deleteObject, getStorage, ref } from 'firebase/storage'; // Import Firebase Storage methods
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchHomeById, saveHome, type Home } from '../../firebase/home';
-import { uploadFile } from '../../firebase/upload';
+import { fetchHomeById, saveHome, type Home } from '../../shared/firebase/home';
+import { uploadFile } from '../../shared/firebase/upload';
 import Input from '../components/input';
 
 function Edit() {

@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import { type Home } from '../../firebase/home';
+import { type Home } from '../../shared/firebase/home';
 
 function Result() {
   const result = useOutletContext<Home[]>();

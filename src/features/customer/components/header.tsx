@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { searchHome, type Home } from '../../firebase/home';
+import { searchHome, type Home } from '../../shared/firebase/home';
+import logoUrl from '../assets/headerLogo.png';
 import Style from './header.module.css';
 
 type HeaderProps = {
@@ -23,10 +24,7 @@ function Header({ setResult }: HeaderProps) {
   return (
     <header className={Style.header}>
       <div className={Style.logo}>
-        <img
-          src="../src/Assests/headerLogo.png"
-          alt="Svensk Fastighetsförmedling"
-        />
+        <img src={logoUrl} alt="Svensk Fastighetsförmedling" />
       </div>
       <div className={Style.buttonContainer}>
         <input

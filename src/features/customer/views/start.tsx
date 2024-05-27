@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { fetchSpotlightHomes, type Home } from '../../firebase/home';
+import { fetchSpotlightHomes, type Home } from '../../shared/firebase/home';
 
-function Home() {
+function Start() {
   const [homes, setHomes] = useState<Home[]>([]);
 
   useEffect(() => {
@@ -24,4 +24,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Start;
