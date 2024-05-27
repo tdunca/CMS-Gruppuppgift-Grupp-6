@@ -10,6 +10,8 @@ function Details() {
       if (!id) return;
       const house = await fetchHouseById(id);
       console.log({ house });
+      // TODO: add html and jsx to show relevant data
+      // save to a state to access
     };
     onLoad();
   }, [id]);
