@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HomeType, fetchHouseById, saveHome } from '../../firebase/home';
 import { uploadFile } from '../../firebase/upload';
+import { getStorage, ref, deleteObject } from 'firebase/storage'; // Import Firebase Storage methods
 import Input from '../components/input';
 
 function Edit() {
@@ -18,7 +19,7 @@ function Edit() {
   const [homeSpotlight, setHomeSpotlight] = useState(false);
   const [imageUrls, setImageUrls] = useState<HomeType['imageUrls']>([]);
 
-  const { id } = useParams();
+  const { id }: { id?: string } = useParams(); // Specify the type of id as string
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,12 +69,54 @@ function Edit() {
     if (success) navigate('/admin/home');
   };
 
+  const handleDeleteImage = async (imageUrlToDelete: string) => {
+    const updatedImages = imageUrls.filter((url) => url !== imageUrlToDelete);
+    setImageUrls(updatedImages); // Update the state with the new image URLs
+
+    try {
+      // Create a reference to the file to delete
+      const storage = getStorage();
+      const fileRef = ref(storage, imageUrlToDelete);
+
+      // Delete the file
+      await deleteObject(fileRef);
+      console.log('Image deleted successfully from storage.');
+
+      // Update Firestore
+      const houseData = {
+        description,
+        roomNum,
+        homePrice,
+        squareMeters,
+        homeAddress,
+        postalCode,
+        homeCity,
+        landSquareMeters,
+        homeBuildYear,
+        homeEnergyClass,
+        homeSpotlight,
+        imageUrls: updatedImages, // Include the updated image URLs
+      };
+      await saveHome(houseData, id!);
+      console.log('Image reference deleted successfully from Firestore.');
+    } catch (error) {
+      console.error('Error deleting image:', error);
+    }
+  };
+
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.[0]) return;
-    const file = e.target.files[0];
-    const url = await uploadFile(file);
-    setImageUrls((prevUrls) => [...prevUrls, url]); // Add new URL to existing array
-    console.log('Uploaded Image URL:', url); // Log uploaded image URL
+    if (!e.target.files?.length) return;
+
+    const files = Array.from(e.target.files);
+    const uploadedImages = await Promise.all(
+      files.map(async (file) => {
+        const url = await uploadFile(file);
+        console.log('Uploaded Image URL:', url); // Log uploaded image URL
+        return url;
+      })
+    );
+
+    setImageUrls((prevUrls) => [...prevUrls, ...uploadedImages]); // Add new URLs to existing array
   };
 
   return (
@@ -157,9 +200,13 @@ function Edit() {
       />
       <div>
         {imageUrls.map((url) => (
-          <img src={url} />
+          <div key={url}>
+            <img src={url} alt={`House Image`} />
+            <button onClick={() => handleDeleteImage(url)}>Delete</button>
+          </div>
         ))}
       </div>
+
       <button onClick={handleClick}>Spara</button>
       <input type="file" onChange={handleFileChange} />
     </main>
