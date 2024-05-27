@@ -1,7 +1,7 @@
 import {
-  UserCredential,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  type UserCredential,
 } from 'firebase/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';

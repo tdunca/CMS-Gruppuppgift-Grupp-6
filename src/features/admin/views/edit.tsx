@@ -1,8 +1,8 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { deleteObject, getStorage, ref } from 'firebase/storage'; // Import Firebase Storage methods
+import { useEffect, useState, type ChangeEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { HomeType, fetchHouseById, saveHome } from '../../firebase/home';
+import { fetchHouseById, saveHome, type Home } from '../../firebase/home';
 import { uploadFile } from '../../firebase/upload';
-import { getStorage, ref, deleteObject } from 'firebase/storage'; // Import Firebase Storage methods
 import Input from '../components/input';
 
 function Edit() {
@@ -17,7 +17,7 @@ function Edit() {
   const [homeBuildYear, setHomeBuildYear] = useState(1980);
   const [homeEnergyClass, setHomeEnergyClass] = useState('');
   const [homeSpotlight, setHomeSpotlight] = useState(false);
-  const [imageUrls, setImageUrls] = useState<HomeType['imageUrls']>([]);
+  const [imageUrls, setImageUrls] = useState<Home['imageUrls']>([]);
 
   const { id }: { id?: string } = useParams(); // Specify the type of id as string
   const navigate = useNavigate();

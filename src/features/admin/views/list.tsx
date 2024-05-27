@@ -1,12 +1,12 @@
 import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteObject, getStorage, ref } from 'firebase/storage'; // Add this impor
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../../main';
-import { fetchAllHomes, HomeType } from '../../firebase/home';
-import { getStorage, ref, deleteObject } from 'firebase/storage'; // Add this impor
+import { fetchAllHomes, type Home } from '../../firebase/home';
 
 function List() {
-  const [houses, setHouses] = useState<HomeType[]>([]);
+  const [houses, setHouses] = useState<Home[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { fetchSpotlightHomes, type HomeType } from '../../firebase/home';
+import { fetchSpotlightHomes, type Home } from '../../firebase/home';
 
 function Home() {
-  const [houses, setHouses] = useState<HomeType[]>([]);
+  const [houses, setHouses] = useState<Home[]>([]);
 
   useEffect(() => {
     const onLoad = async () => {

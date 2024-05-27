@@ -15,7 +15,7 @@ import {
 } from 'firebase/firestore';
 import { auth, db } from '../../main';
 
-type HomeInputType = {
+type HomeFirestoreInput = {
   description: string;
   roomNum: number;
   homePrice: number;
@@ -30,31 +30,31 @@ type HomeInputType = {
   imageUrls: string[];
 };
 
-type HomeWithAgentType = HomeInputType & { agentId: string };
+type HomeFirestoreOutput = HomeFirestoreInput & { agentId: string };
 
-export type HomeType = HomeWithAgentType & { id: string };
+export type Home = HomeFirestoreOutput & { id: string };
 
 const homeConverter = {
-  toFirestore(home: HomeWithAgentType): DocumentData {
+  toFirestore(home: HomeFirestoreOutput): DocumentData {
     return home;
   },
   fromFirestore(
     snapshot: QueryDocumentSnapshot,
     options: SnapshotOptions
-  ): HomeWithAgentType {
-    return snapshot.data(options) as HomeWithAgentType;
+  ): HomeFirestoreOutput {
+    return snapshot.data(options) as HomeFirestoreOutput;
   },
 };
 
 const parseHomeData = (
-  snapshot: QuerySnapshot<HomeWithAgentType, DocumentData>
-): HomeType[] =>
+  snapshot: QuerySnapshot<HomeFirestoreOutput, DocumentData>
+): Home[] =>
   snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
-export const saveHome = async (home: HomeInputType, id: string) => {
+export const saveHome = async (home: HomeFirestoreInput, id: string) => {
   const user = auth.currentUser;
 
   if (!user) {
@@ -63,7 +63,7 @@ export const saveHome = async (home: HomeInputType, id: string) => {
   }
   console.log({ user });
 
-  const data: HomeWithAgentType = { ...home, agentId: '' };
+  const data: HomeFirestoreOutput = { ...home, agentId: '' };
 
   try {
     if (id !== 'new') {
