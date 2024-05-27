@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import Style from './header.module.css';
-import { searchHouse } from '../../firebase/home';
 import { useNavigate } from 'react-router-dom';
+import { searchHome, type Home } from '../../shared/firebase/home';
+import logoUrl from '../assets/headerLogo.png';
+import Style from './header.module.css';
+
 type HeaderProps = {
-  setResult: (result: any) => void;
+  setResult: (result: Home[]) => void;
 };
 
 function Header({ setResult }: HeaderProps) {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+
   const handleSearch = async () => {
-    const result = await searchHouse(search);
+    const result = await searchHome(search);
     if (!result.length) {
       return;
     }
@@ -21,10 +24,7 @@ function Header({ setResult }: HeaderProps) {
   return (
     <header className={Style.header}>
       <div className={Style.logo}>
-        <img
-          src="../src/Assests/headerLogo.png"
-          alt="Svensk Fastighetsförmedling"
-        />
+        <img src={logoUrl} alt="Svensk Fastighetsförmedling" />
       </div>
       <div className={Style.buttonContainer}>
         <input

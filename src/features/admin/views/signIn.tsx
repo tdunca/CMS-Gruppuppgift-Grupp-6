@@ -1,11 +1,6 @@
-import {
-  UserCredential,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../../main';
+import { createUser, signInUser } from '../../shared/firebase/user';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -13,27 +8,21 @@ function SignIn() {
 
   const navigate = useNavigate();
 
-  const createUser = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential: UserCredential) => {
-        console.log('User registered and logged in', { userCredential });
-        navigate('home');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleCreateUser = async () => {
+    await createUser({
+      email,
+      password,
+      name: 'Yves',
+      workEmail: 'tomte',
+      phoneNum: 1239383838,
+    });
+    console.log('woho');
+    navigate('home');
   };
 
-  const signInUser = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential: UserCredential) => {
-        console.log('User logged in', userCredential);
-
-        navigate('home');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleSignIn = async () => {
+    await signInUser({ email, password });
+    navigate('home');
   };
 
   return (
@@ -54,8 +43,8 @@ function SignIn() {
       />
       <br />
 
-      <button onClick={signInUser}>Sign In</button>
-      <button onClick={createUser}>Sign Up</button>
+      <button onClick={handleSignIn}>Sign In</button>
+      <button onClick={handleCreateUser}>Sign Up</button>
     </main>
   );
 }
