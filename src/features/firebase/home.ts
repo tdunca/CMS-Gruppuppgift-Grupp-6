@@ -16,6 +16,7 @@ import {
 import { auth, db } from '../../main';
 
 type HomeFirestoreInput = {
+  coverImage: string;
   description: string;
   roomNum: number;
   homePrice: number;

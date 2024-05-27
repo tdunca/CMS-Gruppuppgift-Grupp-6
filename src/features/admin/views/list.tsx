@@ -45,9 +45,8 @@ function List() {
       <button onClick={() => handleNavigate('new')}>Add New House</button>
       {houses.map((house) => (
         <article key={house.id}>
-          {/* Placeholder for house image */}
           <img
-            src={house.imageUrls[0]}
+            src={house.coverImage}
             alt="House"
             style={{ maxWidth: '100px', maxHeight: '100px' }}
           />
@@ -55,7 +54,11 @@ function List() {
           <p>{`${house.homeAddress} ${house.homeCity}`}</p>
           <div>
             <button onClick={() => handleNavigate(house.id)}>Edit</button>
-            <button onClick={() => deleteHouse(house.id, house.imageUrls)}>
+            <button
+              onClick={() =>
+                deleteHouse(house.id, [...house.imageUrls, house.coverImage])
+              }
+            >
               Delete
             </button>
           </div>

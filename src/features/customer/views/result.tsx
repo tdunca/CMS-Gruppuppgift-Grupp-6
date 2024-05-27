@@ -8,7 +8,7 @@ function Result() {
     <main>
       {result.map((home) => (
         <div key={home.id}>
-          <img src={home.imageUrls[0]} alt="Ett av våra hus för fan!" />
+          <img src={home.coverImage} alt="Ett av våra hus för fan!" />
           <p>{home.description}</p>
         </div>
       ))}

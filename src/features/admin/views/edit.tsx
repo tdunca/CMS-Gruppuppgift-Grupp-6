@@ -6,6 +6,7 @@ import { uploadFile } from '../../firebase/upload';
 import Input from '../components/input';
 
 function Edit() {
+  const [coverImage, setCoverImage] = useState('');
   const [description, setDescription] = useState('');
   const [roomNum, setRoomNum] = useState(3);
   const [homePrice, setHomePrice] = useState(30000000);
@@ -29,6 +30,7 @@ function Edit() {
       const house = await fetchHouseById(id);
       if (!house) return;
 
+      setCoverImage(house.coverImage);
       setDescription(house.description);
       setRoomNum(house.roomNum);
       setHomePrice(house.homePrice);
@@ -45,33 +47,41 @@ function Edit() {
     onLoad();
   }, [id]);
 
-  const handleClick = async () => {
+  const houseData = {
+    coverImage,
+    description,
+    roomNum,
+    homePrice,
+    squareMeters,
+    homeAddress,
+    postalCode,
+    homeCity,
+    landSquareMeters,
+    homeBuildYear,
+    homeEnergyClass,
+    homeSpotlight,
+    imageUrls,
+  };
+
+  const handleSave = async () => {
     if (!id) return;
 
     // if (!description || !name) return; // TODO: better validation
-    const houseData = {
-      description,
-      roomNum,
-      homePrice,
-      squareMeters,
-      homeAddress,
-      postalCode,
-      homeCity,
-      landSquareMeters,
-      homeBuildYear,
-      homeEnergyClass,
-      homeSpotlight,
-      imageUrls, // Include image URL
-    };
 
     const success = await saveHome(houseData, id);
 
     if (success) navigate('/admin/home');
   };
 
-  const handleDeleteImage = async (imageUrlToDelete: string) => {
+  const handleDeleteImage = async (
+    imageUrlToDelete: string,
+    isCoverImage: boolean
+  ) => {
     const updatedImages = imageUrls.filter((url) => url !== imageUrlToDelete);
     setImageUrls(updatedImages); // Update the state with the new image URLs
+    if (isCoverImage) {
+      setCoverImage('');
+    }
 
     try {
       // Create a reference to the file to delete
@@ -83,28 +93,25 @@ function Edit() {
       console.log('Image deleted successfully from storage.');
 
       // Update Firestore
-      const houseData = {
-        description,
-        roomNum,
-        homePrice,
-        squareMeters,
-        homeAddress,
-        postalCode,
-        homeCity,
-        landSquareMeters,
-        homeBuildYear,
-        homeEnergyClass,
-        homeSpotlight,
+      const data = {
+        ...houseData,
         imageUrls: updatedImages, // Include the updated image URLs
       };
-      await saveHome(houseData, id!);
+      await saveHome(data, id!);
       console.log('Image reference deleted successfully from Firestore.');
     } catch (error) {
       console.error('Error deleting image:', error);
     }
   };
 
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleCoverImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+
+    const url = await uploadFile(e.target.files[0]);
+    setCoverImage(url);
+  };
+
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
 
     const files = Array.from(e.target.files);
@@ -121,6 +128,20 @@ function Edit() {
 
   return (
     <main>
+      {coverImage && (
+        <div>
+          <img src={coverImage} alt={`House Cover Image`} />
+          <button onClick={() => handleDeleteImage(coverImage, true)}>
+            Delete
+          </button>
+        </div>
+      )}
+      <Input
+        name="coverImage"
+        label="Omslagsbild"
+        type="file"
+        onChange={handleCoverImageUpload}
+      />
       <Input
         name="homeAddress"
         label="Adress"
@@ -198,17 +219,27 @@ function Edit() {
         checked={homeSpotlight}
         onChange={() => setHomeSpotlight((val: boolean) => !val)}
       />
-      <div>
-        {imageUrls.map((url) => (
-          <div key={url}>
-            <img src={url} alt={`House Image`} />
-            <button onClick={() => handleDeleteImage(url)}>Delete</button>
-          </div>
-        ))}
-      </div>
+      {imageUrls.length > 0 && (
+        <div>
+          {imageUrls.map((url) => (
+            <div key={url}>
+              <img src={url} alt={`House Image`} />
+              <button onClick={() => handleDeleteImage(url, false)}>
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+      <Input
+        name="imageUrls"
+        label="Övriga bilder"
+        type="file"
+        multiple
+        onChange={handleImageUpload}
+      />
 
-      <button onClick={handleClick}>Spara</button>
-      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleSave}>Spara</button>
     </main>
   );
 }

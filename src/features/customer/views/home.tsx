@@ -15,8 +15,8 @@ function Home() {
   return (
     <main>
       {houses.map((house) => (
-        <article>
-          <img src={house.imageUrls[0]} alt="Ett av våra hus för fan!" />
+        <article key={house.id}>
+          <img src={house.coverImage} alt="Ett av våra hus för fan!" />
           <p>{house.description}</p>
         </article>
       ))}
