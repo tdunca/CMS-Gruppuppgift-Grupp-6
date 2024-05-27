@@ -93,7 +93,7 @@ function Edit() {
       console.log('Image deleted successfully from storage.');
 
       if (id && id !== 'new') {
-				// Update Firestore
+        // Update Firestore
         await saveHome(
           {
             ...homeData,
@@ -101,9 +101,8 @@ function Edit() {
           },
           id
         );
+        console.log('Image reference deleted successfully from Firestore.');
       }
-			
-      console.log('Image reference deleted successfully from Firestore.');
     } catch (error) {
       console.error('Error deleting image:', error);
     }
@@ -133,20 +132,21 @@ function Edit() {
 
   return (
     <main>
-      {coverImage && (
+      {coverImage ? (
         <div>
           <img src={coverImage} alt={`Home Cover Image`} />
           <button onClick={() => handleDeleteImage(coverImage, true)}>
             Delete
           </button>
         </div>
+      ) : (
+        <Input
+          name="coverImage"
+          label="Omslagsbild"
+          type="file"
+          onChange={handleCoverImageUpload}
+        />
       )}
-      <Input
-        name="coverImage"
-        label="Omslagsbild"
-        type="file"
-        onChange={handleCoverImageUpload}
-      />
       <Input
         name="homeAddress"
         label="Adress"
