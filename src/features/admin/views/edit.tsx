@@ -20,7 +20,7 @@ function Edit() {
   const [homeSpotlight, setHomeSpotlight] = useState(false);
   const [imageUrls, setImageUrls] = useState<Home['imageUrls']>([]);
 
-  const { id }: { id?: string } = useParams(); // Specify the type of id as string
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -92,12 +92,17 @@ function Edit() {
       await deleteObject(fileRef);
       console.log('Image deleted successfully from storage.');
 
-      // Update Firestore
-      const data = {
-        ...homeData,
-        imageUrls: updatedImages, // Include the updated image URLs
-      };
-      await saveHome(data, id!);
+      if (id && id !== 'new') {
+				// Update Firestore
+        await saveHome(
+          {
+            ...homeData,
+            imageUrls: updatedImages, // Include the updated image URLs
+          },
+          id
+        );
+      }
+			
       console.log('Image reference deleted successfully from Firestore.');
     } catch (error) {
       console.error('Error deleting image:', error);
