@@ -6,21 +6,21 @@ import { db } from '../../../main';
 import { fetchAllHomes, type Home } from '../../firebase/home';
 
 function List() {
-  const [houses, setHouses] = useState<Home[]>([]);
+  const [homes, setHomes] = useState<Home[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const onLoad = async () => {
       const data = await fetchAllHomes();
-      if (data) setHouses(data);
+      if (data) setHomes(data);
     };
     onLoad();
   }, []);
 
-  const deleteHouse = async (id: string, imageUrls: string[]) => {
+  const deleteHome = async (id: string, imageUrls: string[]) => {
     try {
-      const houseDoc = doc(db, 'hus', id);
-      await deleteDoc(houseDoc);
+      const homeDoc = doc(db, 'hus', id);
+      await deleteDoc(homeDoc);
 
       // Delete associated images from Firebase Storage
       const storage = getStorage();
@@ -29,8 +29,8 @@ function List() {
         await deleteObject(fileRef);
       });
 
-      // After deletion, update the house list to reflect the changes
-      setHouses((prevHouses) => prevHouses.filter((house) => house.id !== id));
+      // After deletion, update the home list to reflect the changes
+      setHomes((prevHomes) => prevHomes.filter((home) => home.id !== id));
     } catch (error) {
       console.error('Error deleting document: ', error);
     }
@@ -42,21 +42,21 @@ function List() {
 
   return (
     <main>
-      <button onClick={() => handleNavigate('new')}>Add New House</button>
-      {houses.map((house) => (
-        <article key={house.id}>
+      <button onClick={() => handleNavigate('new')}>Add New Home</button>
+      {homes.map((home) => (
+        <article key={home.id}>
           <img
-            src={house.coverImage}
-            alt="House"
+            src={home.coverImage}
+            alt="Home"
             style={{ maxWidth: '100px', maxHeight: '100px' }}
           />
 
-          <p>{`${house.homeAddress} ${house.homeCity}`}</p>
+          <p>{`${home.homeAddress} ${home.homeCity}`}</p>
           <div>
-            <button onClick={() => handleNavigate(house.id)}>Edit</button>
+            <button onClick={() => handleNavigate(home.id)}>Edit</button>
             <button
               onClick={() =>
-                deleteHouse(house.id, [...house.imageUrls, house.coverImage])
+                deleteHome(home.id, [...home.imageUrls, home.coverImage])
               }
             >
               Delete

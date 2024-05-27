@@ -1,7 +1,7 @@
 import { deleteObject, getStorage, ref } from 'firebase/storage'; // Import Firebase Storage methods
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchHouseById, saveHome, type Home } from '../../firebase/home';
+import { fetchHomeById, saveHome, type Home } from '../../firebase/home';
 import { uploadFile } from '../../firebase/upload';
 import Input from '../components/input';
 
@@ -27,27 +27,27 @@ function Edit() {
     if (!id || id === 'new') return;
 
     const onLoad = async () => {
-      const house = await fetchHouseById(id);
-      if (!house) return;
+      const home = await fetchHomeById(id);
+      if (!home) return;
 
-      setCoverImage(house.coverImage);
-      setDescription(house.description);
-      setRoomNum(house.roomNum);
-      setHomePrice(house.homePrice);
-      setSquareMeters(house.squareMeters);
-      setHomeAddress(house.homeAddress);
-      setPostalCode(house.postalCode);
-      setHomeCity(house.homeCity);
-      setLandSquareMeters(house.landSquareMeters);
-      setHomeBuildYear(house.homeBuildYear);
-      setHomeEnergyClass(house.homeEnergyClass);
-      setHomeSpotlight(house.homeSpotlight);
-      setImageUrls(house.imageUrls);
+      setCoverImage(home.coverImage);
+      setDescription(home.description);
+      setRoomNum(home.roomNum);
+      setHomePrice(home.homePrice);
+      setSquareMeters(home.squareMeters);
+      setHomeAddress(home.homeAddress);
+      setPostalCode(home.postalCode);
+      setHomeCity(home.homeCity);
+      setLandSquareMeters(home.landSquareMeters);
+      setHomeBuildYear(home.homeBuildYear);
+      setHomeEnergyClass(home.homeEnergyClass);
+      setHomeSpotlight(home.homeSpotlight);
+      setImageUrls(home.imageUrls);
     };
     onLoad();
   }, [id]);
 
-  const houseData = {
+  const homeData = {
     coverImage,
     description,
     roomNum,
@@ -68,7 +68,7 @@ function Edit() {
 
     // if (!description || !name) return; // TODO: better validation
 
-    const success = await saveHome(houseData, id);
+    const success = await saveHome(homeData, id);
 
     if (success) navigate('/admin/home');
   };
@@ -94,7 +94,7 @@ function Edit() {
 
       // Update Firestore
       const data = {
-        ...houseData,
+        ...homeData,
         imageUrls: updatedImages, // Include the updated image URLs
       };
       await saveHome(data, id!);
@@ -130,7 +130,7 @@ function Edit() {
     <main>
       {coverImage && (
         <div>
-          <img src={coverImage} alt={`House Cover Image`} />
+          <img src={coverImage} alt={`Home Cover Image`} />
           <button onClick={() => handleDeleteImage(coverImage, true)}>
             Delete
           </button>
@@ -223,7 +223,7 @@ function Edit() {
         <div>
           {imageUrls.map((url) => (
             <div key={url}>
-              <img src={url} alt={`House Image`} />
+              <img src={url} alt={`Home Image`} />
               <button onClick={() => handleDeleteImage(url, false)}>
                 Delete
               </button>

@@ -86,11 +86,11 @@ export const fetchAllHomes = async () => {
 
     return parseHomeData(snapshot);
   } catch (error) {
-    console.error('Error fetching houses: ', error);
+    console.error('Error fetching homes: ', error);
   }
 };
 
-export const fetchHouseById = async (id: string) => {
+export const fetchHomeById = async (id: string) => {
   try {
     const docRef = doc(db, 'hus', id).withConverter(homeConverter);
     const docSnap = await getDoc(docRef);
@@ -114,7 +114,7 @@ export const fetchSpotlightHomes = async () => {
   return parseHomeData(snapshot);
 };
 
-export const searchHouse = async (searchTerm: string) => {
+export const searchHome = async (searchTerm: string) => {
   const q = query(
     collection(db, 'hus').withConverter(homeConverter),
     or(

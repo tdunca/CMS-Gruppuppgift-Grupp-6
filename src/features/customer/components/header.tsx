@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { searchHouse, type Home } from '../../firebase/home';
+import { searchHome, type Home } from '../../firebase/home';
 import Style from './header.module.css';
 
 type HeaderProps = {
@@ -12,7 +12,7 @@ function Header({ setResult }: HeaderProps) {
   const navigate = useNavigate();
 
   const handleSearch = async () => {
-    const result = await searchHouse(search);
+    const result = await searchHome(search);
     if (!result.length) {
       return;
     }
