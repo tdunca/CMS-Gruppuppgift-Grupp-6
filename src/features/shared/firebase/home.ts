@@ -16,7 +16,7 @@ import {
 import { auth, db } from '../../../main';
 import { AgentData } from './user';
 
-type HomeFirestoreInput = {
+type NewHome = {
   coverImage: string;
   description: string;
   roomNum: number;
@@ -32,24 +32,24 @@ type HomeFirestoreInput = {
   imageUrls: string[];
 };
 
-type HomeFirestoreOutput = HomeFirestoreInput & { agentId: string };
+type FirestoreHome = NewHome & { agentId: string };
 
-export type Home = HomeFirestoreOutput & { id: string };
+export type Home = FirestoreHome & { id: string };
 
 const homeConverter = {
-  toFirestore(home: HomeFirestoreOutput): DocumentData {
+  toFirestore(home: FirestoreHome): DocumentData {
     return home;
   },
   fromFirestore(
     snapshot: QueryDocumentSnapshot,
     options: SnapshotOptions
-  ): HomeFirestoreOutput {
-    return snapshot.data(options) as HomeFirestoreOutput;
+  ): FirestoreHome {
+    return snapshot.data(options) as FirestoreHome;
   },
 };
 
 const parseHomeData = (
-  snapshot: QuerySnapshot<HomeFirestoreOutput, DocumentData>
+  snapshot: QuerySnapshot<FirestoreHome, DocumentData>
 ): Home[] =>
   snapshot.docs.map((doc) => ({
     id: doc.id,
@@ -65,7 +65,7 @@ const fetchAgentById = async (id: string) => {
   return agentSnapshot.data() as AgentData;
 };
 
-export const saveHome = async (home: HomeFirestoreInput, id: string) => {
+export const saveHome = async (home: NewHome, id: string) => {
   const user = auth.currentUser;
 
   if (!user) {
@@ -74,9 +74,9 @@ export const saveHome = async (home: HomeFirestoreInput, id: string) => {
   }
   console.log({ user });
 
-  const data: HomeFirestoreOutput = { ...home, agentId: '' };
-
   try {
+    const data = { ...home, agentId: user.uid };
+
     if (id !== 'new') {
       await updateDoc(doc(db, 'hus', id).withConverter(homeConverter), data);
     } else {
@@ -89,7 +89,7 @@ export const saveHome = async (home: HomeFirestoreInput, id: string) => {
 };
 
 export const updateHomeById = async (
-  homeUpdate: Partial<HomeFirestoreInput>,
+  homeUpdate: Partial<FirestoreHome>,
   id: string
 ) => {
   try {
@@ -118,9 +118,11 @@ export const fetchHomeById = async (id: string) => {
   try {
     const docRef = doc(db, 'hus', id).withConverter(homeConverter);
     const docSnap = await getDoc(docRef);
+
     if (docSnap.exists()) {
       const homeData = docSnap.data();
       const agentData = await fetchAgentById(homeData.agentId);
+
       return { homeData, agentData };
     } else {
       console.error('No such document!');
