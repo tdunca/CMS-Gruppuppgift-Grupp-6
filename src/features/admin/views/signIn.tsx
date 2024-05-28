@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUser, signInUser } from '../../shared/firebase/user';
 import Input from '../components/input';
+import Style from './signIn.module.css';
 
 function SignIn() {
   const [currentTab, setCurrentTab] = useState<1 | 2>(1);
@@ -38,35 +39,42 @@ function SignIn() {
   };
 
   return (
-    <main>
-      <section>
-        <button onClick={() => setCurrentTab(1)}>Inloggning</button>
-        <button onClick={() => setCurrentTab(2)}>Registrering</button>
+    <main className={Style.signIn}>
+      <section className={Style.tabs}>
+        <button disabled={currentTab === 1} onClick={() => setCurrentTab(1)}>
+          Inloggning
+        </button>
+        <button disabled={currentTab === 2} onClick={() => setCurrentTab(2)}>
+          Registrering
+        </button>
       </section>
 
       {currentTab === 1 && (
-        <form onSubmit={handleSignIn}>
-          <Input
-            label="Epost:"
-            name="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            label="Lösenord:"
-            name="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <form onSubmit={handleSignIn} className={Style.form}>
+          <section className={Style.section}>
+            <h2 className={Style.header}>Inloggningsuppgifter</h2>
+            <Input
+              label="Användarnamn (epost):"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              label="Lösenord:"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </section>
           <button type="submit">Logga in</button>
         </form>
       )}
       {currentTab === 2 && (
-        <form onSubmit={handleCreateUser}>
-          <section>
-            <p>Inloggningsuppgifter</p>
+        <form onSubmit={handleCreateUser} className={Style.form}>
+          <section className={Style.section}>
+            <h2 className={Style.header}>Inloggningsuppgifter</h2>
             <Input
               label="Användarnamn (epost):"
               name="email"
@@ -89,8 +97,8 @@ function SignIn() {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </section>
-          <section>
-            <p>Kontaktuppgifter</p>
+          <section className={Style.section}>
+            <h2 className={Style.header}>Kontaktuppgifter</h2>
             <Input
               label="Namn:"
               name="name"
