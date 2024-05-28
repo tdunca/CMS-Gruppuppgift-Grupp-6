@@ -54,6 +54,9 @@ function Edit() {
   }, [id]);
 
   const handleSave = async () => {
+    if (!id) {
+      console.log('inget id');
+    }
     if (!id) return;
 
     // if (!description || !name) return; // TODO: better validation

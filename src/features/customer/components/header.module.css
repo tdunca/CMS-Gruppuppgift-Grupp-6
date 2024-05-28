@@ -1,31 +1,37 @@
 .header {
   display: flex;
   align-items: center;
-  width: 100vw;
-  background-color: green;
+  padding-top: 10px;
+  width: 95vw;
+  background-color: transparent;
+  z-index: 4;
 }
 
 .logo {
   flex: 1;
-  /* background-color: blue; */
+}
+
+.logopic {
+  width: 250px;
+  height: 120px;
 }
 
 .buttonContainer {
   display: flex;
-
   padding-inline: 1rem;
   gap: 1rem;
   display: flex;
-  /* background-color: red; */
 }
 
 .label {
   border: 0;
   border-radius: 0.4rem;
+  padding-left: 15px;
   background-color: lightgrey;
   color: black;
 }
 
 .button {
-  background-color: black;
+  background-color: gray;
+  color: white;
 }
