@@ -1,0 +1,39 @@
+.signIn {
+  box-sizing: border-box;
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 30rem;
+  padding-inline: 1rem;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 0 2px #222;
+  border-radius: 5px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.header {
+  margin: 0;
+  padding-top: 1rem;
+  font-size: 1rem;
+  text-decoration: underline;
+  font-weight: 400;
+  text-align: center;
+}
