@@ -120,7 +120,7 @@ export const fetchHomeById = async (id: string) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const homeData = docSnap.data();
+      const homeData = { ...docSnap.data(), id: docSnap.id } as Home;
       const agentData = await fetchAgentById(homeData.agentId);
 
       return { homeData, agentData };
