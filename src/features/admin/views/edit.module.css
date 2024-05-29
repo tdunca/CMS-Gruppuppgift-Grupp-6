@@ -1,0 +1,68 @@
+.edit,
+.background {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 80rem;
+	width: 100%;
+  padding: 0.5rem 0.5rem 0;
+  gap: 2rem;
+}
+
+.edit button {
+  align-self: center;
+  min-width: 8rem;
+}
+
+.inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.background, .buttons {
+  --bg-color: rgba(77, 189, 77, 0.15);
+  background-color: var(--bg-color);
+  box-shadow: 0 0 0 100vmax var(--bg-color);
+  clip-path: inset(0 -100vmax);
+	padding-block: 1rem;
+}
+
+.inputs > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 0 15rem;
+}
+
+.imageList,
+.file,
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.image {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 15rem;
+  width: 100%;
+  max-width: 40rem;
+  align-self: center;
+	gap: 0.5rem;
+}
+
+.image img {
+  width: 100%;
+  object-fit: contain;
+	border-radius: 5px;
+}
+
+.spotlight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

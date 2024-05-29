@@ -9,6 +9,7 @@ import {
 } from '../../shared/firebase/home';
 import { uploadFile } from '../../shared/firebase/upload';
 import Input from '../components/input';
+import Style from './edit.module.css';
 
 function Edit() {
   const [coverImage, setCoverImage] = useState('');
@@ -54,6 +55,9 @@ function Edit() {
   }, [id]);
 
   const handleSave = async () => {
+    if (!id) {
+      console.log('inget id');
+    }
     if (!id) return;
 
     // if (!description || !name) return; // TODO: better validation
@@ -134,120 +138,143 @@ function Edit() {
   };
 
   return (
-    <main>
+    <main className={Style.edit}>
       {coverImage ? (
-        <div>
+        <div className={Style.image}>
           <img src={coverImage} alt={`Home Cover Image`} />
           <button onClick={() => handleDeleteImage(coverImage, true)}>
-            Delete
+            Radera omslagsbild
           </button>
         </div>
       ) : (
         <Input
           name="coverImage"
-          label="Omslagsbild"
+          label="Omslagsbild:"
           type="file"
+          accept="image/png, image/jpeg"
           onChange={handleCoverImageUpload}
         />
       )}
-      <Input
-        name="homeAddress"
-        label="Adress"
-        type="text"
-        value={homeAddress}
-        onChange={(e) => setHomeAddress(e.target.value)}
-      />
-      <Input
-        name="postalCode"
-        label="Postnummer"
-        type="number"
-        value={postalCode}
-        onChange={(e) => setPostalCode(parseInt(e.target.value))}
-      />
-      <Input
-        name="homeCity"
-        label="Ort"
-        type="text"
-        value={homeCity}
-        onChange={(e) => setHomeCity(e.target.value)}
-      />
-      <Input
-        name="roomNum"
-        label="Antal rum"
-        type="number"
-        value={roomNum}
-        onChange={(e) => setRoomNum(parseInt(e.target.value))}
-      />
-      <Input
-        name="homePrice"
-        label="Pris"
-        type="number"
-        value={homePrice}
-        onChange={(e) => setHomePrice(parseInt(e.target.value))}
-      />
-      <Input
-        name="squareMeters"
-        label="Boarea"
-        type="number"
-        value={squareMeters}
-        onChange={(e) => setSquareMeters(parseInt(e.target.value))}
-      />
-      <Input
-        name="landSquareMeters"
-        label="Tomtarea"
-        type="number"
-        value={landSquareMeters}
-        onChange={(e) => setLandSquareMeters(parseInt(e.target.value))}
-      />
-      <Input
-        name="homeBuildYear"
-        label="Byggnadsår"
-        type="number"
-        value={homeBuildYear}
-        onChange={(e) => setHomeBuildYear(parseInt(e.target.value))}
-      />
-      <Input
-        name="homeEnergyClass"
-        label="Energiklass"
-        type="text"
-        value={homeEnergyClass}
-        onChange={(e) => setHomeEnergyClass(e.target.value)}
-      />
-      <Input
-        name="description"
-        label="Beskrivning"
-        type="text"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <Input
-        name="homeSpotlight"
-        label="Spotlight"
-        type="checkbox"
-        checked={homeSpotlight}
-        onChange={() => setHomeSpotlight((val: boolean) => !val)}
-      />
+      <div className={Style.background}>
+        <section className={Style.inputs}>
+          <div>
+            <Input
+              name="homeAddress"
+              label="Address:"
+              type="text"
+              placeholder="Gatvägen 11"
+              value={homeAddress}
+              onChange={(e) => setHomeAddress(e.target.value)}
+            />
+            <Input
+              name="postalCode"
+              label="Postnummer:"
+              type="number"
+              placeholder="12345"
+              value={postalCode}
+              onChange={(e) => setPostalCode(parseInt(e.target.value))}
+            />
+            <Input
+              name="homeCity"
+              label="Ort:"
+              type="text"
+              placeholder="Stadköping"
+              value={homeCity}
+              onChange={(e) => setHomeCity(e.target.value)}
+            />
+            <Input
+              name="roomNum"
+              label="Antal rum:"
+              type="number"
+              placeholder="3"
+              value={roomNum}
+              onChange={(e) => setRoomNum(parseInt(e.target.value))}
+            />
+            <Input
+              name="homePrice"
+              label="Pris:"
+              type="number"
+              placeholder="1000000"
+              value={homePrice}
+              onChange={(e) => setHomePrice(parseInt(e.target.value))}
+            />
+          </div>
+          <div>
+            <Input
+              name="squareMeters"
+              label="Boarea (kvadratmeter):"
+              type="number"
+              placeholder="87"
+              value={squareMeters}
+              onChange={(e) => setSquareMeters(parseInt(e.target.value))}
+            />
+            <Input
+              name="landSquareMeters"
+              label="Tomtarea (kvadratmeter):"
+              type="number"
+              placeholder="78"
+              value={landSquareMeters}
+              onChange={(e) => setLandSquareMeters(parseInt(e.target.value))}
+            />
+            <Input
+              name="homeBuildYear"
+              label="Byggnadsår:"
+              type="number"
+              placeholder="2000"
+              value={homeBuildYear}
+              onChange={(e) => setHomeBuildYear(parseInt(e.target.value))}
+            />
+            <Input
+              name="homeEnergyClass"
+              label="Energiklass:"
+              type="text"
+              placeholder="A"
+              value={homeEnergyClass}
+              onChange={(e) => setHomeEnergyClass(e.target.value)}
+            />
+            <Input
+              name="description"
+              label="Beskrivning:"
+              type="text"
+              placeholder="Ett mysigt krypin"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+        </section>
+        <section className={Style.spotlight}>
+          <button onClick={() => setHomeSpotlight((prev) => !prev)}>
+            {homeSpotlight ? 'Dölj' : 'Spotlight'}
+          </button>
+          {homeSpotlight && <span>Hemmet visas i spotlight!</span>}
+        </section>
+      </div>
+      <section className={Style.file}>
+        <Input
+          name="imageUrls"
+          label="Övriga bilder:"
+          type="file"
+          accept="image/png, image/jpeg"
+          multiple
+          onChange={handleImageUpload}
+        />
+      </section>
       {imageUrls.length > 0 && (
-        <div>
+        <div className={Style.imageList}>
           {imageUrls.map((url) => (
-            <div key={url}>
+            <div key={url} className={Style.image}>
               <img src={url} alt={`Home Image`} />
               <button onClick={() => handleDeleteImage(url, false)}>
-                Delete
+                Radera bild
               </button>
             </div>
           ))}
         </div>
       )}
-      <Input
-        name="imageUrls"
-        label="Övriga bilder"
-        type="file"
-        multiple
-        onChange={handleImageUpload}
-      />
-
-      <button onClick={handleSave}>Spara</button>
+      <section className={Style.buttons}>
+        <button onClick={handleSave}>Spara hemmet</button>
+        <button onClick={() => navigate('/admin/home')}>Avbryt</button>
+      </section>
     </main>
   );
 }

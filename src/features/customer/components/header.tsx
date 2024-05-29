@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchHome, type Home } from '../../shared/firebase/home';
-import logoUrl from '../assets/headerLogo.png';
+import logoUrl from '../assets/headerLogoVit.png';
 import Style from './header.module.css';
 
 type HeaderProps = {
@@ -23,15 +23,17 @@ function Header({ setResult }: HeaderProps) {
 
   return (
     <header className={Style.header}>
-      <div className={Style.logo}>
-        <img src={logoUrl} alt="Svensk Fastighetsförmedling" />
-      </div>
+      <img
+        src={logoUrl}
+        className={Style.logopic}
+        alt="Elite Home Fastigheter"
+      />
       <div className={Style.buttonContainer}>
         <input
           className={Style.label}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Sök hus här!"
+          placeholder="Sök efter bostad... "
           type="text"
         />
         <button className={Style.button} onClick={handleSearch}>

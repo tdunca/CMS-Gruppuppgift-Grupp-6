@@ -1,5 +1,20 @@
 .footer {
   text-align: center;
   width: 100vw;
-  background-color: green;
+  background-color: lightgray;
+}
+
+.footerSection {
+  display: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.socialslink {
+  margin: 10px;
+}
+
+.socialspic {
+  height: 50px;
+  width: 50px;
 }

@@ -8,8 +8,9 @@ function Result() {
     <main>
       {result.map((home) => (
         <div key={home.id}>
-          <img src={home.coverImage} alt="Ett av våra hus för fan!" />
-          <p>{home.description}</p>
+          <img src={home.coverImage} alt="Ett av våra hus för fan test !" />
+          test
+          <p>{home.description} </p>
         </div>
       ))}
     </main>

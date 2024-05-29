@@ -13,28 +13,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+	display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  min-width: 100dvw;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	flex: 1;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #f253c5;
-}
-main {
-  flex: 1;
-}
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
 }
 
 button {

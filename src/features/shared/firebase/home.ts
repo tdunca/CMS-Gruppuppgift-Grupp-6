@@ -139,8 +139,15 @@ export const fetchSpotlightHomes = async () => {
   );
   const snapshot = await getDocs(q);
 
-  return parseHomeData(snapshot);
+  return parseHomeData(snapshot) as Home[];
 };
+
+// export const fetchSpotlightHomes = async () => {
+//   const q = query( collection(db, 'hus').withConverter(homeConverter), where('homeSpotlight', '==', true) );
+//   const snapshot = await getDocs(q);
+
+//   return parseHomeData(snapshot);
+// };
 
 export const searchHome = async (searchTerm: string) => {
   const q = query(
