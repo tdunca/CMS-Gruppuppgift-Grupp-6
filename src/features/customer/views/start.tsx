@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchSpotlightHomes, type Home } from '../../shared/firebase/home';
-import Style from './home.module.css';
+import Style from './start.module.css';
 import Carousel from 'react-material-ui-carousel';
-import videobg from '../assets/headervid.mp4';
+// import videobg from '../assets/headervid.mp4';
 
 function Start() {
   const [houses, setHouses] = useState<Home[]>([]);
@@ -18,9 +18,9 @@ function Start() {
   }, []);
 
   return (
-    <main>
-      <article className={videobg}>
-        <video src={videobg} autoPlay loop muted />
+    <main className={Style.start}>
+      <article className={Style.videobg}>
+        {/* <video src={videobg} autoPlay loop muted /> */}
         <article className={Style.onTopText}>
           <h1>Går du i säljartankar?</h1>
           <h2>
@@ -36,7 +36,7 @@ function Start() {
         </p>
         <Carousel
           className={Style.carouselWrapper}
-          autoPlay={true}
+          autoPlay={false}
           navButtonsAlwaysVisible={true}
           animation="fade"
           stopAutoPlayOnHover={true}
@@ -44,16 +44,16 @@ function Start() {
         >
           {houses.map((house, i) => (
             <article
-              className={Style.article}
+              className={Style.imageBox}
               key={i}
               onClick={() => navigate('home/' + house.id)}
             >
-              <p>{house.description}</p>
               <img
                 src={house.coverImage}
                 className={Style.image}
                 alt="Ett av våra hem"
               />
+              <p className={Style.imageText}>{house.description}</p>
             </article>
           ))}
         </Carousel>
