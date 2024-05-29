@@ -4,7 +4,7 @@ import { fetchSpotlightHomes, type Home } from '../../shared/firebase/home';
 import Style from './start.module.css';
 import Carousel from 'react-material-ui-carousel';
 import { RealtorCard } from '../components/realtor-card-component';
-// import videobg from '../assets/headervid.mp4';
+import videobg from '../assets/headervid.mp4';
 import agneta from '../assets/agneta.jpg';
 import paul from '../assets/paul.jpg';
 import johanna from '../assets/johanna.jpg';
@@ -25,7 +25,7 @@ function Start() {
   return (
     <main className={Style.start}>
       <article className={Style.videobg}>
-        {/* <video src={videobg} autoPlay loop muted /> */}
+        {<video src={videobg} autoPlay loop muted />}
         <article className={Style.onTopText}>
           <h2>Går du i säljartankar?</h2>
           <h4>
