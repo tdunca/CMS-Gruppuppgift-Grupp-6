@@ -26,6 +26,7 @@ video {
   color: white;
   font-family: 'Times New Roman', Times, serif;
   text-shadow: 1px 1px 2px black;
+  font-size: 30px;
 }
 
 .spotlight {
@@ -40,6 +41,8 @@ video {
 
 .spotlight > p {
   text-align: center;
+  font-size: 25px;
+  text-shadow: 1px 1px 2px black;
 }
 
 .carouselWrapper {
@@ -70,6 +73,27 @@ video {
 
 .realtors {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.aboutheader {
+  margin-top: 3rem;
+  font-size: 25px;
+  text-shadow: 1px 1px 2px black;
+}
+
+.abouttext {
+  margin-left: 30rem;
+  margin-right: 30rem;
+  font-size: 18px;
+  text-align: center;
+}
+
+.realtorcards {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
+  gap: 2rem;
 }

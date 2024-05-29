@@ -9,7 +9,7 @@ function Footer() {
     <>
       <footer className={Style.footer}>
         <section className={Style.footerSection}>
-          <p>0138 333 333 | elite@home.com</p>
+          <p>0138 333 333 | info@elitehomes.com</p>
           <p>Mäklargatan 23 | Mäklarberg | Sverige </p>
           <a className={Style.socialslink} href="https://www.instagram.com/">
             <img
