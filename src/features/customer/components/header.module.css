@@ -1,25 +1,21 @@
 .header {
   display: flex;
   align-items: center;
-  padding-top: 10px;
-  width: 95vw;
+	justify-content: space-around;
+  padding: 0.5rem;
   background-color: transparent;
+	height: 7vh;
   z-index: 4;
 }
 
-.logo {
-  flex: 1;
-}
-
 .logopic {
-  width: 250px;
-  height: 120px;
+	object-fit: cover;
+	height: 100%;
 }
 
 .buttonContainer {
   display: flex;
-  padding-inline: 1rem;
-  gap: 1rem;
+  gap: 0.5rem;
   display: flex;
 }
 

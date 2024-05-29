@@ -23,13 +23,11 @@ function Header({ setResult }: HeaderProps) {
 
   return (
     <header className={Style.header}>
-      <div className={Style.logo}>
-        <img
-          src={logoUrl}
-          className={Style.logopic}
-          alt="Elite Home Fastigheter"
-        />
-      </div>
+      <img
+        src={logoUrl}
+        className={Style.logopic}
+        alt="Elite Home Fastigheter"
+      />
       <div className={Style.buttonContainer}>
         <input
           className={Style.label}
