@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../../main';
 import { fetchAllHomes, type Home } from '../../shared/firebase/home';
-import ImageCard from '../components/imageCard';
+import ImageCard from '../../shared/components/imageCard';
 import './list.css';
 
 function List() {
