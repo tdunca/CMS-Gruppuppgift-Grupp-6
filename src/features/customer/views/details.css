@@ -1,11 +1,5 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 .coverImg {
-  max-width: 50vw;
+  max-width: 50rem;
 }
 
 .mainPage {
@@ -13,24 +7,54 @@
   color: rgb(27, 27, 27);
   display: flex;
   align-items: center;
-  padding-top: 5vh;
+  padding-block: 5vh;
   flex-direction: column;
-  /*width: 50vw;*/
+  gap: 2rem;
 }
 
 .houseSection {
-  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 50rem;
   background-color: #e6e6d7;
-  border-radius: 0.4rem;
-  margin-bottom: 2vh;
+  border-radius: 5px;
+  padding-block: 1rem;
 }
 
-h1 {
-  text-align: center;
-  padding: 0.5rem;
+.houseInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-inline: 1rem;
 }
-h2,
-h3,
-p {
-  padding-left: 1rem;
+
+.houseSection h1{
+	margin: 0;
+	text-align: center;
+}
+
+.houseSection h2 {
+  margin: 0;
+}
+
+.imageSection {
+  height: calc(50vh + 4rem);
+  width: 100%;
+  max-width: 60rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.detailsImage {
+  object-fit: cover;
+  height: 50vh;
+  min-height: 50vh;
+  width: 100%;
+}
+
+.realtorSection {
 }
