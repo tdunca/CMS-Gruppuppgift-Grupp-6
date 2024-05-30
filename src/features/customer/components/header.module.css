@@ -18,6 +18,7 @@
 .logopic {
   object-fit: cover;
   height: 100%;
+	cursor: pointer;
 }
 
 .buttonContainer {

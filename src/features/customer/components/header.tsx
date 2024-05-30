@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchHome, type Home } from '../../shared/firebase/home';
 import logoUrl from '../assets/headerLogoVit.png';
@@ -29,8 +29,11 @@ function Header({ setResult }: HeaderProps) {
     return window.removeEventListener('scroll', () => handleScroll());
   }, [headerBg]);
 
-  const handleSearch = async () => {
+  const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const result = await searchHome(search);
+
     if (!result.length) {
       return;
     }
@@ -44,8 +47,9 @@ function Header({ setResult }: HeaderProps) {
         src={logoUrl}
         className={Style.logopic}
         alt="Elite Home Fastigheter"
+        onClick={() => navigate('/')}
       />
-      <div className={Style.buttonContainer}>
+      <form onSubmit={handleSearch} className={Style.buttonContainer}>
         <input
           className={Style.label}
           value={search}
@@ -53,10 +57,10 @@ function Header({ setResult }: HeaderProps) {
           placeholder="Sök efter bostad... "
           type="text"
         />
-        <button className={Style.button} onClick={handleSearch}>
+        <button className={Style.button} type="submit">
           Sök
         </button>
-      </div>
+      </form>
     </header>
   );
 }
