@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchHome, type Home } from '../../shared/firebase/home';
 import logoUrl from '../assets/headerLogoVit.png';
@@ -10,7 +10,24 @@ type HeaderProps = {
 
 function Header({ setResult }: HeaderProps) {
   const [search, setSearch] = useState('');
+  const [headerBg, setHeaderBg] = useState(false);
   const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    console.log('useLayoutEffect', window.scrollY);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const offset = 200;
+      console.log(scrollY);
+
+      if (scrollY < offset && headerBg) setHeaderBg(false);
+      if (scrollY >= offset && !headerBg) setHeaderBg(true);
+    };
+
+    window.addEventListener('scroll', () => handleScroll());
+
+    return window.removeEventListener('scroll', () => handleScroll());
+  }, [headerBg]);
 
   const handleSearch = async () => {
     const result = await searchHome(search);
@@ -22,7 +39,7 @@ function Header({ setResult }: HeaderProps) {
   };
 
   return (
-    <header className={Style.header}>
+    <header className={`${Style.header} ${headerBg ? Style.headerBg : ''}`}>
       <img
         src={logoUrl}
         className={Style.logopic}

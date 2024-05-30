@@ -6,6 +6,13 @@
   background-color: transparent;
   height: 7vh;
   z-index: 4;
+  position: fixed;
+  inset: 0;
+  transition: background-color 500ms ease-in-out;
+}
+
+.headerBg {
+  background-color: black;
 }
 
 .logopic {
