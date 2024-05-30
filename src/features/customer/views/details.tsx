@@ -50,10 +50,10 @@ function Details() {
           <p>Ort: {home.homeCity}</p>
           <p>Postnummer: {home.postalCode}</p>
           <p>Antal rum: {home.roomNum}</p>
-          <p>Kvadratmeter: {home.landSquareMeters}</p>
+          <p>Kvadratmeter: {home.landSquareMeters} m²</p>
           <p>Energiklass: {home.homeEnergyClass}</p>
           <p>Byggår: {home.homeBuildYear}</p>
-          <p>Tomtarea: {home.landSquareMeters}</p>
+          <p>Tomtarea: {home.landSquareMeters} m²</p>
         </div>
       </section>
       {home.imageUrls.length > 0 && (
