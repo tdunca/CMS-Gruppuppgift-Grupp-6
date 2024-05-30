@@ -1,0 +1,29 @@
+/* src/features/customer/views/result.css */
+
+.result-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to the next line if necessary */
+  justify-content: center; /* Center the cards */
+  gap: 20px; /* Space between the cards */
+  padding: 20px;
+}
+
+.result-image-card {
+  flex: 1 1 200px; /* Grow and shrink with a base size of 200px */
+  max-width: 300px; /* Limit the maximum width of the cards */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.result-image-card img {
+  width: 100%; /* Make the image take the full width of the card */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.result-image-card .image-card-content {
+  padding: 20px;
+  background-color: #fff;
+  color: black; /* Text color inside the card */
+}

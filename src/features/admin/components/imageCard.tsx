@@ -1,3 +1,4 @@
+// src/features/admin/components/ImageCard.tsx
 import React from 'react';
 import './imageCard.css';
 
@@ -5,8 +6,9 @@ type ImageCardProps = {
   imageUrl: string;
   title: string;
   description: string;
-  onEdit: () => void;
-  onDelete: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  className?: string;
 };
 
 const ImageCard: React.FC<ImageCardProps> = ({
@@ -15,16 +17,21 @@ const ImageCard: React.FC<ImageCardProps> = ({
   description,
   onEdit,
   onDelete,
+  className = '',
 }) => {
   return (
-    <div className="image-card">
+    <div className={`image-card ${className}`}>
       <img src={imageUrl} alt="Home" />
       <div className="image-card-content">
         <h3>{title}</h3>
         <p>{description}</p>
         <div className="image-card-actions">
-          <button onClick={onEdit}>Edit</button>
-          <button onClick={onDelete}>Delete</button>
+          {onEdit && <button onClick={onEdit}>Edit</button>}
+          {onDelete && (
+            <button className="delete" onClick={onDelete}>
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </div>
