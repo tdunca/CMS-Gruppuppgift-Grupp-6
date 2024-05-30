@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { fetchSpotlightHomes, type Home } from '../../shared/firebase/home';
 import Style from './start.module.css';
 import Carousel from 'react-material-ui-carousel';
-// import videobg from '../assets/headervid.mp4';
+import { RealtorCard } from '../components/realtor-card-component';
+import videobg from '../assets/headervid.mp4';
+import agneta from '../assets/agneta.jpg';
+import paul from '../assets/paul.jpg';
+import johanna from '../assets/johanna.jpg';
+import matilda from '../assets/matilda.jpg';
 
 function Start() {
   const [houses, setHouses] = useState<Home[]>([]);
@@ -20,23 +25,20 @@ function Start() {
   return (
     <main className={Style.start}>
       <article className={Style.videobg}>
-        {/* <video src={videobg} autoPlay loop muted /> */}
+        {<video src={videobg} autoPlay loop muted />}
         <article className={Style.onTopText}>
-          <h1>Går du i säljartankar?</h1>
-          <h2>
+          <h2>Går du i säljartankar?</h2>
+          <h4>
             Ring oss på 0138 333 333 eller skicka ett mail på elite@home.com
-          </h2>
+          </h4>
         </article>
       </article>
 
       <article className={Style.spotlight}>
-        <p>
-          Klicktoppen - fattar fan inte varför karuselljäveln vägrar centrera
-          bilderna.
-        </p>
+        <p>Klicktoppen</p>
         <Carousel
           className={Style.carouselWrapper}
-          autoPlay={false}
+          autoPlay={true}
           navButtonsAlwaysVisible={true}
           animation="fade"
           stopAutoPlayOnHover={true}
@@ -59,9 +61,43 @@ function Start() {
         </Carousel>
       </article>
       <article className={Style.realtors}>
-        <h3>Våra mäklare</h3>
-        <h5>Lite text om oss blablabla</h5>
-        <h5>Tänker typ en contact card component här för mäklarna bara?</h5>
+        <p className={Style.aboutheader}>
+          Vi hjälper dig till ditt livs bästa affär
+        </p>
+        <p className={Style.abouttext}>
+          Ska du köpa, sälja eller hyra ut en bostad? Vi på Elite Homes
+          Fastigheter förmedlar och värderar alla typer av bostäder och erbjuder
+          dig som kund en helhetäckande mäklartjänst från start till mål. Som
+          vinnare av årets bästa mäklarfirma 2023 kan vi stoltsera med en
+          kundnöjdhet i världsklass. Kontaka någon av våra enastående mäklare
+          nedan!{' '}
+        </p>
+        <article className={Style.realtorcards}>
+          <RealtorCard
+            name="Agneta Andersson"
+            email="agneta@elitehomes.com"
+            phoneNumber="0138-333 321"
+            imageUrl={agneta}
+          />
+          <RealtorCard
+            name="Paul Persson"
+            email="paul@elitehomes.com"
+            phoneNumber="0138-333 322"
+            imageUrl={paul}
+          />
+          <RealtorCard
+            name="Johanna Jakobsson"
+            email="johanna@elitehomes.com"
+            phoneNumber="0138-333 323"
+            imageUrl={johanna}
+          />
+          <RealtorCard
+            name="Matilda Martinsson"
+            email="matilda@elitehomes.com"
+            phoneNumber="0138-333 324"
+            imageUrl={matilda}
+          />
+        </article>
       </article>
     </main>
   );
