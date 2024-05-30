@@ -29,7 +29,7 @@ function Start() {
         <article className={Style.onTopText}>
           <h2>Går du i säljartankar?</h2>
           <h1>
-            Ring oss på 0138 333 333 eller skicka ett mail på elite@home.com
+            Ring oss på 0138 333 333 eller skicka ett mail på hej@elitehome.com
           </h1>
         </article>
       </section>
@@ -77,25 +77,25 @@ function Start() {
         <div className={Style.realtorcards}>
           <RealtorCard
             name="Agneta Andersson"
-            email="agneta@elitehomes.com"
+            email="agneta@elitehome.com"
             phoneNumber="0138-333 321"
             imageUrl={agneta}
           />
           <RealtorCard
             name="Paul Persson"
-            email="paul@elitehomes.com"
+            email="paul@elitehome.com"
             phoneNumber="0138-333 322"
             imageUrl={paul}
           />
           <RealtorCard
             name="Johanna Jakobsson"
-            email="johanna@elitehomes.com"
+            email="johanna@elitehome.com"
             phoneNumber="0138-333 323"
             imageUrl={johanna}
           />
           <RealtorCard
             name="Matilda Martinsson"
-            email="matilda@elitehomes.com"
+            email="matilda@elitehome.com"
             phoneNumber="0138-333 324"
             imageUrl={matilda}
           />

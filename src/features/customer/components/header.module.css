@@ -1,10 +1,10 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 0.5rem;
+  justify-content: space-between;
+  padding: 0.5rem 5vw;
   background-color: transparent;
-  height: 7vh;
+  height: 12vh;
   z-index: 4;
   position: fixed;
   inset: 0;
@@ -18,24 +18,38 @@
 .logopic {
   object-fit: cover;
   height: 100%;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .buttonContainer {
   display: flex;
   gap: 0.5rem;
-  display: flex;
 }
 
 .label {
   border: 0;
-  border-radius: 0.4rem;
-  padding-left: 15px;
+  border-radius: 4px;
+  padding: 0 4px;
   background-color: lightgrey;
   color: black;
+	width: clamp(8rem, 14vw, 16rem);
 }
 
 .button {
   background-color: gray;
   color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .header {
+		justify-content: space-between;
+		align-items: flex-end;
+    padding: 0 2px;
+		height: 7vh;
+  }
+
+  .buttonContainer {
+    gap: 2px;
+		padding-bottom: 4px;
+  }
 }
