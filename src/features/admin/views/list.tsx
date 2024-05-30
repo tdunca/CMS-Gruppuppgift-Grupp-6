@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../../main';
 import { fetchAllHomes, type Home } from '../../shared/firebase/home';
+import ImageCard from '../components/imageCard';
+import './list.css';
 
 function List() {
   const [homes, setHomes] = useState<Home[]>([]);
@@ -43,27 +45,20 @@ function List() {
   return (
     <main>
       <button onClick={() => handleNavigate('new')}>Add New Home</button>
-      {homes.map((home) => (
-        <article key={home.id}>
-          <img
-            src={home.coverImage}
-            alt="Home"
-            style={{ maxWidth: '100px', maxHeight: '100px' }}
+      <div className="home-list">
+        {homes.map((home) => (
+          <ImageCard
+            key={home.id}
+            imageUrl={home.coverImage}
+            title={`${home.homeAddress} ${home.homeCity}`}
+            description={`Price: ${home.homePrice}`}
+            onEdit={() => handleNavigate(home.id)}
+            onDelete={() =>
+              deleteHome(home.id, [...home.imageUrls, home.coverImage])
+            }
           />
-
-          <p>{`${home.homeAddress} ${home.homeCity}`}</p>
-          <div>
-            <button onClick={() => handleNavigate(home.id)}>Edit</button>
-            <button
-              onClick={() =>
-                deleteHome(home.id, [...home.imageUrls, home.coverImage])
-              }
-            >
-              Delete
-            </button>
-          </div>
-        </article>
-      ))}
+        ))}
+      </div>
     </main>
   );
 }
