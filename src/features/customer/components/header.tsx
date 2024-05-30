@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { searchHome, type Home } from '../../shared/firebase/home';
 import logoUrl from '../assets/headerLogoVit.png';
 import Style from './header.module.css';
@@ -12,6 +12,8 @@ function Header({ setResult }: HeaderProps) {
   const [search, setSearch] = useState('');
   const [headerBg, setHeaderBg] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const fancyHeader = location.pathname === '/';
 
   useLayoutEffect(() => {
     const handleScroll = () => {
@@ -40,7 +42,11 @@ function Header({ setResult }: HeaderProps) {
   };
 
   return (
-    <header className={`${Style.header} ${headerBg ? Style.headerBg : ''}`}>
+    <header
+      className={`${Style.header} ${fancyHeader ? Style.headerDynamic : ''} ${
+        headerBg ? Style.headerBg : ''
+      }`}
+    >
       <img
         src={logoUrl}
         className={Style.logopic}
@@ -51,7 +57,7 @@ function Header({ setResult }: HeaderProps) {
         <input
           className={Style.label}
           value={search}
-					name='search'
+          name="search"
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Sök efter bostad... "
           type="text"
