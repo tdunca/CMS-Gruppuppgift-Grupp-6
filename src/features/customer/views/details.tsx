@@ -8,6 +8,12 @@ function Details() {
   const [home, setHome] = useState<Home>();
   const [agent, setAgent] = useState<AgentData>();
   const { id } = useParams();
+  const sekConverter = new Intl.NumberFormat('sv-SE', {
+    style: 'currency',
+    currency: 'SEK',
+  });
+
+  console.log(sekConverter.format(12314532325));
 
   useEffect(() => {
     const onLoad = async () => {
@@ -28,32 +34,24 @@ function Details() {
 
   // if home fetching is successful
   return (
-    <main>
-      <section>
-        <h1>{home.homeAddress}</h1>
-        <img
-          className="coverImg"
-          src={home.coverImage}
-          alt="Ett av våra hus för fan!"
-        />
-        <p>{home.description}</p>
-        <h2>
-          {home.homeCity}, {home.postalCode}
-        </h2>
-        <h2>Utgångspris: {home.homePrice}</h2>
+    <main className="mainPage">
+      <section className="houseSection">
+        <h1>
+          {home.homeAddress}, {home.homeCity}
+        </h1>
+        <img className="coverImg" src={home.coverImage} alt="Bild på hus" />
         <h3>Detaljer:</h3>
+        <p>Beskrivning: {home.description}</p>
+        <p className="price">
+          Utgångspris: {sekConverter.format(home.homePrice)}
+        </p>
+        <p>Ort: {home.homeCity}</p>
+        <p>Postnummer: {home.postalCode}</p>
         <p>Antal rum: {home.roomNum}</p>
         <p>Kvadratmeter: {home.landSquareMeters}</p>
         <p>Energiklass: {home.homeEnergyClass}</p>
         <p>Byggår: {home.homeBuildYear}</p>
         <p>Tomtarea: {home.landSquareMeters}</p>
-      </section>
-      <section>
-        <p>{home.description}</p>
-        <h3>Kontaktuppgifter till mäklare:</h3>
-        <p>{agent.name}</p>
-        <p>{agent.phoneNum}</p>
-        <p>{agent.workEmail}</p>
       </section>
     </main>
   );
