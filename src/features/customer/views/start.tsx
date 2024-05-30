@@ -39,10 +39,12 @@ function Start() {
         <Carousel
           className={Style.carouselWrapper}
           autoPlay={true}
+					interval={6000}
           navButtonsAlwaysVisible={true}
           animation="fade"
           stopAutoPlayOnHover={true}
           cycleNavigation={true}
+					changeOnFirstRender={true}
         >
           {homes.map((home) => (
             <article
