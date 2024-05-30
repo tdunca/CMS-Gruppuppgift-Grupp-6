@@ -11,13 +11,13 @@ import { RealtorCard } from '../components/realtor-card-component';
 import Style from './start.module.css';
 
 function Start() {
-  const [houses, setHouses] = useState<Home[]>([]);
+  const [homes, setHomes] = useState<Home[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const onLoad = async () => {
       const data = await fetchSpotlightHomes();
-      if (data) setHouses(data);
+      if (data) setHomes(data);
     };
     onLoad();
   }, []);
@@ -35,7 +35,7 @@ function Start() {
       </section>
 
       <section className={Style.spotlight}>
-        <p>Klicktoppen</p>
+        <h2>Klicktoppen</h2>
         <Carousel
           className={Style.carouselWrapper}
           autoPlay={true}
@@ -44,18 +44,18 @@ function Start() {
           stopAutoPlayOnHover={true}
           cycleNavigation={true}
         >
-          {houses.map((house, i) => (
+          {homes.map((home) => (
             <article
               className={Style.imageBox}
-              key={i}
-              onClick={() => navigate('home/' + house.id)}
+              key={home.id}
+              onClick={() => navigate('home/' + home.id)}
             >
               <img
-                src={house.coverImage}
+                src={home.coverImage}
                 className={Style.image}
                 alt="Ett av våra hem"
               />
-              <p className={Style.imageText}>{house.description}</p>
+              <h3 className={Style.imageText}>{home.description}</h3>
             </article>
           ))}
         </Carousel>
@@ -72,7 +72,7 @@ function Start() {
           kundnöjdhet i världsklass. Kontaka någon av våra enastående mäklare
           nedan!{' '}
         </p>
-        <article className={Style.realtorcards}>
+        <div className={Style.realtorcards}>
           <RealtorCard
             name="Agneta Andersson"
             email="agneta@elitehomes.com"
@@ -97,7 +97,7 @@ function Start() {
             phoneNumber="0138-333 324"
             imageUrl={matilda}
           />
-        </article>
+        </div>
       </section>
     </main>
   );

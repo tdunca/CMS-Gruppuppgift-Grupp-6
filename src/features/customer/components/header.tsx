@@ -14,11 +14,9 @@ function Header({ setResult }: HeaderProps) {
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
-    console.log('useLayoutEffect', window.scrollY);
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const offset = 200;
-      console.log(scrollY);
 
       if (scrollY < offset && headerBg) setHeaderBg(false);
       if (scrollY >= offset && !headerBg) setHeaderBg(true);
@@ -53,6 +51,7 @@ function Header({ setResult }: HeaderProps) {
         <input
           className={Style.label}
           value={search}
+					name='search'
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Sök efter bostad... "
           type="text"
