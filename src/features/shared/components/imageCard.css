@@ -1,0 +1,68 @@
+/* ImageCard component styles */
+.image-card {
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #fcfcfc;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.image-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-card img {
+  width: 100%;
+  height: auto;
+}
+
+.image-card-content {
+  padding: 15px;
+  color: rgb(53, 50, 50);
+}
+
+.image-card h3 {
+  font-size: 1.2em;
+  margin: 0 0 10px;
+}
+
+.image-card p {
+  color: #666;
+  font-size: 0.9em;
+  margin: 0 0 15px;
+}
+
+.image-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px 15px;
+}
+
+.image-card-actions button {
+  background-color: #0056b3;
+  border: none;
+  color: rgb(255, 255, 255);
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-card-actions button:hover {
+  background-color: #0056b3;
+}
+
+.image-card-actions button.delete {
+  background-color: #dc3545;
+}
+
+.image-card-actions button.delete:hover {
+  background-color: #c82333;
+}

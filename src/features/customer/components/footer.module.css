@@ -1,0 +1,19 @@
+.footer {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: lightgray;
+  padding: 2rem 1rem;
+}
+
+.socials {
+  display: flex;
+	gap: 2rem;
+}
+
+.socialspic {
+  height: 50px;
+  width: 50px;
+}

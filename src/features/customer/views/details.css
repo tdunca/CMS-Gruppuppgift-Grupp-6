@@ -1,0 +1,60 @@
+.coverImg {
+  max-width: 50rem;
+}
+
+.mainPage {
+  background-color: rgb(0 0 0 / 0.35);
+  color: rgb(27, 27, 27);
+  display: flex;
+  align-items: center;
+  padding-block: 5vh;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.houseSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 50rem;
+  background-color: #e6e6d7;
+  border-radius: 5px;
+  padding-block: 1rem;
+}
+
+.houseInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-inline: 1rem;
+}
+
+.houseSection h1{
+	margin: 0;
+	text-align: center;
+}
+
+.houseSection h2 {
+  margin: 0;
+}
+
+.imageSection {
+  height: calc(50vh + 4rem);
+  width: 100%;
+  max-width: 60rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.detailsImage {
+  object-fit: cover;
+  height: 50vh;
+  min-height: 50vh;
+  width: 100%;
+}
+
+.realtorSection {
+}
