@@ -3,12 +3,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 5vw;
-  background-color: transparent;
+  background-color: black;
   height: 12vh;
   z-index: 4;
-  position: fixed;
+  position: sticky;
   inset: 0;
   transition: background-color 500ms ease-in-out;
+}
+
+.headerDynamic {
+  position: fixed;
+  background-color: transparent;
 }
 
 .headerBg {
@@ -32,7 +37,7 @@
   padding: 0 4px;
   background-color: lightgrey;
   color: black;
-	width: clamp(8rem, 14vw, 16rem);
+  width: clamp(8rem, 14vw, 16rem);
 }
 
 .button {
@@ -42,14 +47,14 @@
 
 @media only screen and (max-width: 600px) {
   .header {
-		justify-content: space-between;
-		align-items: flex-end;
+    justify-content: space-between;
+    align-items: flex-end;
     padding: 0 2px;
-		height: 7vh;
+    height: 7vh;
   }
 
   .buttonContainer {
     gap: 2px;
-		padding-bottom: 4px;
+    padding-bottom: 4px;
   }
 }

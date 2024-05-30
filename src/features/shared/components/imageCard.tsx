@@ -9,6 +9,7 @@ type ImageCardProps = {
   onEdit?: () => void;
   onDelete?: () => void;
   className?: string;
+  onClick?: () => void;
 };
 
 const ImageCard: React.FC<ImageCardProps> = ({
@@ -18,9 +19,14 @@ const ImageCard: React.FC<ImageCardProps> = ({
   onEdit,
   onDelete,
   className = '',
+  onClick,
 }) => {
+  const handleClick = () => {
+    if (onClick) onClick();
+  };
+
   return (
-    <div className={`image-card ${className}`}>
+    <div className={`image-card ${className}`} onClick={handleClick}>
       <img src={imageUrl} alt="Home" />
       <div className="image-card-content">
         <h3>{title}</h3>
