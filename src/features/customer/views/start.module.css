@@ -33,7 +33,8 @@ video {
   align-items: center;
   justify-content: center;
   background-color: #e6e6d7;
-  height: 60vh;
+  min-height: 60vh;
+	padding-block: 2rem 4rem; 
 }
 
 .spotlight > p {

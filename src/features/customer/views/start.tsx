@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
+import Carousel from 'react-material-ui-carousel';
 import { useNavigate } from 'react-router-dom';
 import { fetchSpotlightHomes, type Home } from '../../shared/firebase/home';
-import Style from './start.module.css';
-import Carousel from 'react-material-ui-carousel';
-import { RealtorCard } from '../components/realtor-card-component';
-import videobg from '../assets/headervid.mp4';
 import agneta from '../assets/agneta.jpg';
-import paul from '../assets/paul.jpg';
+import videobg from '../assets/headervid.mp4';
 import johanna from '../assets/johanna.jpg';
 import matilda from '../assets/matilda.jpg';
+import paul from '../assets/paul.jpg';
+import { RealtorCard } from '../components/realtor-card-component';
+import Style from './start.module.css';
 
 function Start() {
   const [houses, setHouses] = useState<Home[]>([]);
@@ -24,17 +24,17 @@ function Start() {
 
   return (
     <main className={Style.start}>
-      <article className={Style.videobg}>
+      <section className={Style.videobg}>
         <video src={videobg} autoPlay loop muted />
         <article className={Style.onTopText}>
           <h2>Går du i säljartankar?</h2>
-          <h4>
+          <h1>
             Ring oss på 0138 333 333 eller skicka ett mail på elite@home.com
-          </h4>
+          </h1>
         </article>
-      </article>
+      </section>
 
-      <article className={Style.spotlight}>
+      <section className={Style.spotlight}>
         <p>Klicktoppen</p>
         <Carousel
           className={Style.carouselWrapper}
@@ -59,11 +59,11 @@ function Start() {
             </article>
           ))}
         </Carousel>
-      </article>
-      <article className={Style.realtors}>
-        <p className={Style.aboutheader}>
+      </section>
+      <section className={Style.realtors}>
+        <h2 className={Style.aboutheader}>
           Vi hjälper dig till ditt livs bästa affär
-        </p>
+        </h2>
         <p className={Style.abouttext}>
           Ska du köpa, sälja eller hyra ut en bostad? Vi på Elite Homes
           Fastigheter förmedlar och värderar alla typer av bostäder och erbjuder
@@ -98,7 +98,7 @@ function Start() {
             imageUrl={matilda}
           />
         </article>
-      </article>
+      </section>
     </main>
   );
 }
