@@ -6,7 +6,7 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
+	
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,9 +18,10 @@
   flex-direction: column;
   min-height: 100dvh;
   min-width: 100dvw;
+	position: relative;
 }
 
-html, body {
+html, body, p {
 	margin: 0;
 	padding: 0;
 }

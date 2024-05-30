@@ -6,23 +6,18 @@
   justify-content: center;
   align-items: center;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	font-size: 1.2rem;
+	color: black;
+	font-size: clamp(1rem, 1.8vw, 1.2rem);
 }
 
 .name {
-  font-size: 25px;
-}
-.email {
-  margin: 0;
-}
-
-.phoneNumber {
-  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
 }
 
 .image {
-  height: 100%;
+	object-fit: cover;
   width: 100%;
-  max-height: 15rem;
 }
 .card {
   background-color: #e6e6d7;
@@ -30,4 +25,7 @@
   border-radius: 10px;
   border-color: #e6e6d7;
   padding-bottom: 1rem;
+	overflow: hidden;
+	flex: 1 0 min(95vw, 17rem);
+	max-width: 20rem;
 }

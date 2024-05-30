@@ -9,11 +9,11 @@ interface Props {
 
 export const RealtorCard = ({ name, email, phoneNumber, imageUrl }: Props) => {
   return (
-    <div className={Style.card}>
+    <article className={Style.card}>
       <img className={Style.image} src={imageUrl} />
-      <p className={Style.name}>{name}</p>
+      <h3 className={Style.name}>{name}</h3>
       <p className={Style.email}>{email}</p>
       <p className={Style.phoneNumber}>{phoneNumber}</p>
-    </div>
+    </article>
   );
 };
