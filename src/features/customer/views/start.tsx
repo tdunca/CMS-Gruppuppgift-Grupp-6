@@ -25,7 +25,7 @@ function Start() {
   return (
     <main className={Style.start}>
       <article className={Style.videobg}>
-        {<video src={videobg} autoPlay loop muted />}
+        <video src={videobg} autoPlay loop muted />
         <article className={Style.onTopText}>
           <h2>Går du i säljartankar?</h2>
           <h4>
