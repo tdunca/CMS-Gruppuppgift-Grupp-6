@@ -74,24 +74,27 @@ video {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+	padding-block: 3rem;
 }
 
 .aboutheader {
-  margin-top: 3rem;
-  font-size: 25px;
+  font-size: clamp(1.2rem 2.5vw 2.5rem);
   text-shadow: 1px 1px 2px black;
+	text-decoration: underline;
 }
 
 .abouttext {
-  margin-left: 30rem;
-  margin-right: 30rem;
-  font-size: 18px;
-  text-align: center;
+  font-size: 1.2rem;
+	max-width: 50rem;
+	text-wrap: balance;
+	text-align: center;
 }
 
 .realtorcards {
   display: flex;
-  flex-direction: row;
-  margin-bottom: 2rem;
+	justify-content: center;
+	flex-wrap: wrap;
   gap: 2rem;
+	padding: 2rem 0.5rem;
+	max-width: 50rem;
 }
